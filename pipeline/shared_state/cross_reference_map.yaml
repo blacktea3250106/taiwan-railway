@@ -1,0 +1,1892 @@
+# ═══════════════════════════════════════════════════════════════
+# 台鐵 AI 客服系統建置案 — 跨文件交叉引用對照表
+# 案號: L0215P2010U
+# 產出日期: 2026-04-05
+# 格式: A4 直式橫書，附頁次
+# ═══════════════════════════════════════════════════════════════
+# 編號體系:
+#   FR-{模組}-NNN  功能需求編號（對應 PRD 第五章）
+#   TC-{模組}-NNN  測試案例編號（1:1 對應 FR）
+#   M-{模組}-NN    軟體模組編號（程式設計規格）
+#   P-{模組}-NN    程式編號（程式設計書）
+#   AD-NNN         架構決策編號（decisions.yaml SECTION H）
+#
+# 模組代碼:
+#   IVR = 智慧語音應答  STT = 語音識別  TTS = 語音合成
+#   LLM = 大型語言模型  AGT = AI 虛擬客服  QI = 智慧質檢
+#   RPT = 查詢及報表    SMS = 簡訊服務    KB = 知識庫管理
+#   WS  = 值機平台      ADM = 管理後台
+# ═══════════════════════════════════════════════════════════════
+
+
+# =============================================================
+# 1. 功能需求編號（FR）與測試案例編號（TC）對照
+# =============================================================
+
+functional_requirements:
+
+  # -----------------------------------------------------------
+  # 5.1 智慧語音應答系統（AI-IVR）
+  # -----------------------------------------------------------
+  - id: FR-IVR-001
+    name: "語音通道與 CTI 整合"
+    description: "提供 ≥30 埠語音通道，整合 CTI 控制介面，支援 E1、WebCall 及行政分機同時接入"
+    prd_section: "5.1.1"
+    test_case: TC-IVR-001
+    module: M-IVR-01
+    program: P-IVR-01
+    related_ad: [AD-007]
+    kpi_ref: [ivr_ports]
+    deliverable_ref: ["02", "03", "05", "06"]
+
+  - id: FR-IVR-002
+    name: "智慧來電應答與引導"
+    description: "整合 LLM、STT、TTS 實現智慧語音應答，旅客說完到聽到回覆首字 ≤5 秒"
+    prd_section: "5.1.2"
+    test_case: TC-IVR-002
+    module: M-IVR-01
+    program: P-IVR-01
+    related_ad: [AD-002, AD-004]
+    kpi_ref: [ivr_accuracy, ivr_response]
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-IVR-003
+    name: "多輪對話與引導機制"
+    description: "支援多輪連續對話，依上下文脈絡引導旅客完成查詢或服務請求"
+    prd_section: "5.1.3"
+    test_case: TC-IVR-003
+    module: M-IVR-02
+    program: P-IVR-02
+    related_ad: [AD-004]
+    kpi_ref: [ivr_accuracy]
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-IVR-004
+    name: "串接真人客服"
+    description: "AI 無法解決時自動轉接真人客服，附帶對話摘要與知識輔助資訊"
+    prd_section: "5.1.4"
+    test_case: TC-IVR-004
+    module: M-IVR-03
+    program: P-IVR-03
+    related_ad: [AD-007]
+    kpi_ref: []
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-IVR-005
+    name: "按碼偵測與動態選單"
+    description: "支援 DTMF 按碼偵測，動態生成語音選單供旅客快速導航"
+    prd_section: "5.1.5"
+    test_case: TC-IVR-005
+    module: M-IVR-04
+    program: P-IVR-04
+    related_ad: [AD-007]
+    kpi_ref: []
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-IVR-006
+    name: "滿意度調查"
+    description: "通話結束前提供滿意度調查，收集旅客評價並統計分析"
+    prd_section: "5.1.6"
+    test_case: TC-IVR-006
+    module: M-IVR-05
+    program: P-IVR-05
+    related_ad: []
+    kpi_ref: []
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-IVR-007
+    name: "防護機制"
+    description: "阻擋非業務問題與惡意攻擊，包含敏感詞過濾、頻率限制、對話逾時中斷"
+    prd_section: "5.1.7"
+    test_case: TC-IVR-007
+    module: M-IVR-06
+    program: P-IVR-06
+    related_ad: [AD-001]
+    kpi_ref: []
+    deliverable_ref: ["02", "03", "05"]
+
+  # -----------------------------------------------------------
+  # 5.2 語音識別系統（STT）
+  # -----------------------------------------------------------
+  - id: FR-STT-001
+    name: "即時中英文語音轉文字"
+    description: "即時將旅客語音轉換為文字，支援中英文混合辨識，辨識率 ≥85%"
+    prd_section: "5.2.1"
+    test_case: TC-STT-001
+    module: M-STT-01
+    program: P-STT-01
+    related_ad: [AD-003]
+    kpi_ref: [stt_accuracy]
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-STT-002
+    name: "語音內容分類與意圖辨識"
+    description: "辨識旅客語音內容之意圖類別，供後續路由分派與智慧應答使用"
+    prd_section: "5.2.2"
+    test_case: TC-STT-002
+    module: M-STT-02
+    program: P-STT-02
+    related_ad: [AD-003]
+    kpi_ref: [stt_accuracy]
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-STT-003
+    name: "語音斷點與停頓偵測"
+    description: "偵測語音斷點與停頓（VAD），準確判斷旅客發言結束時機以觸發回應"
+    prd_section: "5.2.3"
+    test_case: TC-STT-003
+    module: M-STT-03
+    program: P-STT-03
+    related_ad: [AD-003]
+    kpi_ref: [ivr_response]
+    deliverable_ref: ["02", "03", "05"]
+
+  # -----------------------------------------------------------
+  # 5.3 語音合成系統（TTS）
+  # -----------------------------------------------------------
+  - id: FR-TTS-001
+    name: "中英文即時語音合成"
+    description: "將系統文字回應即時合成為自然語音，支援中英文混合播放"
+    prd_section: "5.3.1"
+    test_case: TC-TTS-001
+    module: M-TTS-01
+    program: P-TTS-01
+    related_ad: [AD-003]
+    kpi_ref: [ivr_response]
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-TTS-002
+    name: "動態選單語音生成"
+    description: "依後台設定動態生成語音選單內容，無需預錄音檔"
+    prd_section: "5.3.2"
+    test_case: TC-TTS-002
+    module: M-TTS-02
+    program: P-TTS-02
+    related_ad: [AD-003]
+    kpi_ref: []
+    deliverable_ref: ["02", "03", "05"]
+
+  # -----------------------------------------------------------
+  # 5.4 大型語言模型（LLM）
+  # -----------------------------------------------------------
+  - id: FR-LLM-001
+    name: "GPU 運算與高併發穩定性"
+    description: "GPU 專責 LLM 推論，支援多實例高併發運行，確保系統穩定"
+    prd_section: "5.4.1"
+    test_case: TC-LLM-001
+    module: M-LLM-01
+    program: P-LLM-01
+    related_ad: [AD-002, AD-004]
+    kpi_ref: [ivr_response, agent_response]
+    deliverable_ref: ["02", "03", "05", "06"]
+
+  - id: FR-LLM-002
+    name: "語意理解與問答生成"
+    description: "理解旅客自然語言查詢意圖，生成準確且自然的回答"
+    prd_section: "5.4.2"
+    test_case: TC-LLM-002
+    module: M-LLM-02
+    program: P-LLM-02
+    related_ad: [AD-004]
+    kpi_ref: [ivr_accuracy, agent_accuracy]
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-LLM-003
+    name: "上下文關聯與連續對話"
+    description: "維持對話上下文，支援連續多輪問答，理解指代與省略語意"
+    prd_section: "5.4.3"
+    test_case: TC-LLM-003
+    module: M-LLM-02
+    program: P-LLM-02
+    related_ad: [AD-004]
+    kpi_ref: [ivr_accuracy, agent_accuracy]
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-LLM-004
+    name: "關鍵詞識別與文字修正"
+    description: "支援關鍵詞識別、同義詞擴展、敏感詞過濾及常見錯別字自動修正"
+    prd_section: "5.4.4"
+    test_case: TC-LLM-004
+    module: M-LLM-03
+    program: P-LLM-03
+    related_ad: [AD-004]
+    kpi_ref: [ivr_accuracy, agent_accuracy]
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-LLM-005
+    name: "知識庫維護與自動學習"
+    description: "支援知識庫內容新增、修改、刪除及版本管理，具備自動學習優化機制"
+    prd_section: "5.4.5"
+    test_case: TC-LLM-005
+    module: M-KB-01
+    program: P-KB-01
+    related_ad: [AD-004, AD-008]
+    kpi_ref: []
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-LLM-006
+    name: "權限控管與使用者管理"
+    description: "依角色設定知識庫存取權限，支援多層級使用者管理與操作日誌"
+    prd_section: "5.4.6"
+    test_case: TC-LLM-006
+    module: M-KB-02
+    program: P-KB-02
+    related_ad: [AD-001]
+    kpi_ref: [log_retention]
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-LLM-007
+    name: "對話紀錄管理"
+    description: "完整保存對話紀錄，支援匯出 Word、PDF、Excel、HTML、CSV 格式"
+    prd_section: "5.4.7"
+    test_case: TC-LLM-007
+    module: M-LLM-04
+    program: P-LLM-04
+    related_ad: []
+    kpi_ref: [log_retention]
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-LLM-008
+    name: "後送案件分析"
+    description: "對後送案件自動分類、判定優先級、情感分析及趨勢預測，正確率 ≥85%"
+    prd_section: "5.4.8"
+    test_case: TC-LLM-008
+    module: M-LLM-05
+    program: P-LLM-05
+    related_ad: [AD-002, AD-004]
+    kpi_ref: [classify_accuracy]
+    deliverable_ref: ["02", "03", "05"]
+
+  # -----------------------------------------------------------
+  # 5.5 AI 虛擬客服（AI-Agent）
+  # -----------------------------------------------------------
+  - id: FR-AGT-001
+    name: "數位通道服務"
+    description: "提供 ≥30 埠數位文字通道，支援 Web 及 App 同時連線"
+    prd_section: "5.5.1"
+    test_case: TC-AGT-001
+    module: M-AGT-01
+    program: P-AGT-01
+    related_ad: [AD-005]
+    kpi_ref: [agent_ports]
+    deliverable_ref: ["02", "03", "05", "06"]
+
+  - id: FR-AGT-002
+    name: "向量資料庫整合與版本管理"
+    description: "整合向量資料庫（Qdrant）實現語意檢索，支援知識庫版本管理與回溯"
+    prd_section: "5.5.2"
+    test_case: TC-AGT-002
+    module: M-AGT-02
+    program: P-AGT-02
+    related_ad: [AD-002, AD-008]
+    kpi_ref: [agent_accuracy]
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-AGT-003
+    name: "互動式對話與智慧問答"
+    description: "透過 LLM + RAG 提供智慧文字問答，支援多輪對話與上下文理解"
+    prd_section: "5.5.3"
+    test_case: TC-AGT-003
+    module: M-AGT-03
+    program: P-AGT-03
+    related_ad: [AD-004]
+    kpi_ref: [agent_accuracy, agent_response]
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-AGT-004
+    name: "回應引用來源標註（RAG Citation）"
+    description: "AI 回應自動標註知識來源出處，供旅客與客服人員驗證答案可靠性"
+    prd_section: "5.5.4"
+    test_case: TC-AGT-004
+    module: M-AGT-03
+    program: P-AGT-03
+    related_ad: [AD-004]
+    kpi_ref: [agent_accuracy]
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-AGT-005
+    name: "個性化問答機制"
+    description: "基於使用者歷史對話與需求，提供個性化回答與推薦"
+    prd_section: "5.5.5"
+    test_case: TC-AGT-005
+    module: M-AGT-04
+    program: P-AGT-04
+    related_ad: [AD-004]
+    kpi_ref: [agent_accuracy]
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-AGT-006
+    name: "Web/App 整合與真人轉接"
+    description: "整合 Web 及 App 數位客服介面，支援 AI 轉真人客服並附帶對話摘要"
+    prd_section: "5.5.6"
+    test_case: TC-AGT-006
+    module: M-AGT-05
+    program: P-AGT-05
+    related_ad: [AD-005]
+    kpi_ref: []
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-AGT-007
+    name: "SMS 簡訊服務整合"
+    description: "整合雙備援 SMS 收發裝置，AI 自動回覆同步通知客服人員，簡訊紀錄保留 ≥5 年"
+    prd_section: "5.5.7"
+    test_case: TC-AGT-007
+    module: M-SMS-01
+    program: P-SMS-01
+    related_ad: [AD-005]
+    kpi_ref: [sms_retention]
+    deliverable_ref: ["02", "03", "05", "06"]
+
+  - id: FR-AGT-008
+    name: "系統持續優化與校正機制"
+    description: "提供 AI 模型持續優化機制，包含回饋學習、校正流程與效能監控"
+    prd_section: "5.5.8"
+    test_case: TC-AGT-008
+    module: M-AGT-06
+    program: P-AGT-06
+    related_ad: [AD-004]
+    kpi_ref: [agent_accuracy]
+    deliverable_ref: ["02", "03", "05"]
+
+  # -----------------------------------------------------------
+  # 5.6 智慧質檢系統（AI-QI）
+  # -----------------------------------------------------------
+  - id: FR-QI-001
+    name: "多格式數據匯入與批次處理"
+    description: "支援多種音檔格式匯入，自動排程批次處理質檢任務"
+    prd_section: "5.6.1"
+    test_case: TC-QI-001
+    module: M-QI-01
+    program: P-QI-01
+    related_ad: [AD-002]
+    kpi_ref: [qi_speed]
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-QI-002
+    name: "語音轉文字處理（業務場景術語優化）"
+    description: "將客服錄音轉為文字，針對台鐵業務場景術語進行辨識優化"
+    prd_section: "5.6.2"
+    test_case: TC-QI-002
+    module: M-QI-02
+    program: P-QI-02
+    related_ad: [AD-003]
+    kpi_ref: [qi_speed, stt_accuracy]
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-QI-003
+    name: "自訂質檢規則與評分機制"
+    description: "管理者可自訂質檢評分規則、權重與通過標準，系統自動評分"
+    prd_section: "5.6.3"
+    test_case: TC-QI-003
+    module: M-QI-03
+    program: P-QI-03
+    related_ad: []
+    kpi_ref: [qi_speed]
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-QI-004
+    name: "靜音與插話偵測"
+    description: "自動偵測通話中的靜音段與插話行為，作為質檢評分依據"
+    prd_section: "5.6.4"
+    test_case: TC-QI-004
+    module: M-QI-04
+    program: P-QI-04
+    related_ad: []
+    kpi_ref: []
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-QI-005
+    name: "語調與情緒分析"
+    description: "分析客服人員與旅客語調情緒，識別負面情緒並標記異常通話"
+    prd_section: "5.6.5"
+    test_case: TC-QI-005
+    module: M-QI-05
+    program: P-QI-05
+    related_ad: [AD-002]
+    kpi_ref: []
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-QI-006
+    name: "異常偵測與警報機制"
+    description: "質檢結果出現異常時自動發送警報通知督導人員"
+    prd_section: "5.6.6"
+    test_case: TC-QI-006
+    module: M-QI-06
+    program: P-QI-06
+    related_ad: []
+    kpi_ref: []
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-QI-007
+    name: "多維度質檢報表"
+    description: "提供活動報表、專員績效報表、原因分析報表等多維度質檢統計"
+    prd_section: "5.6.7"
+    test_case: TC-QI-007
+    module: M-QI-07
+    program: P-QI-07
+    related_ad: []
+    kpi_ref: [qi_speed]
+    deliverable_ref: ["02", "03", "05"]
+
+  # -----------------------------------------------------------
+  # 5.7 查詢及報表功能（RPT）
+  # -----------------------------------------------------------
+  - id: FR-RPT-001
+    name: "統計分析報表"
+    description: "提供對話服務類、AI 管理類、知識點分析、滿意度等統計分析報表"
+    prd_section: "5.7.1"
+    test_case: TC-RPT-001
+    module: M-RPT-01
+    program: P-RPT-01
+    related_ad: []
+    kpi_ref: []
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-RPT-002
+    name: "彈性化報表儀表板"
+    description: "提供視覺化儀表板，支援自訂篩選條件、時間區間與圖表類型"
+    prd_section: "5.7.2"
+    test_case: TC-RPT-002
+    module: M-RPT-02
+    program: P-RPT-02
+    related_ad: []
+    kpi_ref: []
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-RPT-003
+    name: "客製報表服務"
+    description: "保固期內提供 ≥10 個客製報表，依台鐵需求設計製作"
+    prd_section: "5.7.3"
+    test_case: TC-RPT-003
+    module: M-RPT-03
+    program: P-RPT-03
+    related_ad: []
+    kpi_ref: [custom_reports]
+    deliverable_ref: ["02", "03", "05"]
+
+  # -----------------------------------------------------------
+  # 5.8 值機平台（WS — WorkStation）
+  # -----------------------------------------------------------
+  - id: FR-WS-001
+    name: "座席操作介面與通話控制"
+    description: "提供值機員統一操作介面，整合接聽、保留、轉接、掛斷等通話控制功能，顯示來電資訊與客戶歷史"
+    prd_section: "5.8.1"
+    test_case: TC-WS-001
+    module: M-WS-01
+    program: P-WS-01
+    related_ad: [AD-007]
+    kpi_ref: []
+    deliverable_ref: ["02", "03", "05", "07"]
+
+  - id: FR-WS-002
+    name: "AI 知識輔助與即時建議"
+    description: "值機員接聽時即時推送 AI 建議回覆與相關知識庫內容，輔助快速應答"
+    prd_section: "5.8.2"
+    test_case: TC-WS-002
+    module: M-WS-02
+    program: P-WS-02
+    related_ad: [AD-004]
+    kpi_ref: [ivr_accuracy, agent_accuracy]
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-WS-003
+    name: "對話摘要與客服工單"
+    description: "通話/對話結束後自動生成摘要，支援建立、編輯、追蹤後送工單"
+    prd_section: "5.8.3"
+    test_case: TC-WS-003
+    module: M-WS-03
+    program: P-WS-03
+    related_ad: [AD-004]
+    kpi_ref: [classify_accuracy]
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-WS-004
+    name: "督導即時監控與介入"
+    description: "督導可即時監看所有座席狀態、監聽通話、密語指導、強制介入，並查看即時服務指標"
+    prd_section: "5.8.4"
+    test_case: TC-WS-004
+    module: M-WS-04
+    program: P-WS-04
+    related_ad: [AD-005]
+    kpi_ref: [availability]
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-WS-005
+    name: "座席狀態管理"
+    description: "支援值機員簽入/簽出、就緒/忙碌/休息等狀態切換，統計各狀態時長"
+    prd_section: "5.8.5"
+    test_case: TC-WS-005
+    module: M-WS-05
+    program: P-WS-05
+    related_ad: []
+    kpi_ref: []
+    deliverable_ref: ["02", "03", "05"]
+
+  # -----------------------------------------------------------
+  # 5.9 管理後台（ADM — Admin）
+  # -----------------------------------------------------------
+  - id: FR-ADM-001
+    name: "系統參數設定管理"
+    description: "提供系統參數設定介面，含 IVR 話術、AI 回應策略、通道分配、服務時段等設定"
+    prd_section: "5.9.1"
+    test_case: TC-ADM-001
+    module: M-ADM-01
+    program: P-ADM-01
+    related_ad: [AD-006]
+    kpi_ref: []
+    deliverable_ref: ["02", "03", "05", "07"]
+
+  - id: FR-ADM-002
+    name: "帳號與角色權限管理"
+    description: "整合 AD/LDAP 帳號驗證，支援角色型存取控制（RBAC），管理值機員/督導/管理者權限"
+    prd_section: "5.9.2"
+    test_case: TC-ADM-002
+    module: M-ADM-02
+    program: P-ADM-02
+    related_ad: [AD-001]
+    kpi_ref: [log_retention]
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-ADM-003
+    name: "系統監控儀表板"
+    description: "即時顯示系統健康狀態、服務指標（可用率、回應時間）、告警通知，整合 Prometheus/Grafana"
+    prd_section: "5.9.3"
+    test_case: TC-ADM-003
+    module: M-ADM-03
+    program: P-ADM-03
+    related_ad: [AD-005, AD-006]
+    kpi_ref: [availability, daily_max_downtime, mttr, incident_notify]
+    deliverable_ref: ["02", "03", "05", "07"]
+
+  - id: FR-ADM-004
+    name: "日誌管理與稽核追蹤"
+    description: "集中管理系統日誌、操作日誌、存取日誌，保留 ≥6 個月，支援查詢匯出與稽核追蹤"
+    prd_section: "5.9.4"
+    test_case: TC-ADM-004
+    module: M-ADM-04
+    program: P-ADM-04
+    related_ad: [AD-001]
+    kpi_ref: [log_retention]
+    deliverable_ref: ["02", "03", "05"]
+
+  - id: FR-ADM-005
+    name: "備份與回復管理介面"
+    description: "提供資料備份排程設定、手動備份觸發、回復操作介面，含備份狀態監控與通知"
+    prd_section: "5.9.5"
+    test_case: TC-ADM-005
+    module: M-ADM-05
+    program: P-ADM-05
+    related_ad: [AD-005]
+    kpi_ref: [mttr]
+    deliverable_ref: ["02", "03", "05", "07"]
+
+
+# =============================================================
+# 2. 軟體模組編號（M）清單
+# =============================================================
+
+software_modules:
+
+  # IVR 模組
+  - id: M-IVR-01
+    name: "語音通道與 CTI 整合模組"
+    description: "SIP/RTP 語音接入、CTI 控制、通道管理"
+    related_fr: [FR-IVR-001, FR-IVR-002]
+    related_ad: [AD-007]
+
+  - id: M-IVR-02
+    name: "多輪對話引擎模組"
+    description: "對話狀態機管理、上下文維護、對話流程控制"
+    related_fr: [FR-IVR-003]
+    related_ad: [AD-004]
+
+  - id: M-IVR-03
+    name: "真人轉接模組"
+    description: "AI 轉人工客服、對話摘要生成、知識輔助推送"
+    related_fr: [FR-IVR-004]
+    related_ad: [AD-007]
+
+  - id: M-IVR-04
+    name: "DTMF 與動態選單模組"
+    description: "DTMF 按碼偵測、語音選單動態生成與導航"
+    related_fr: [FR-IVR-005]
+    related_ad: [AD-007]
+
+  - id: M-IVR-05
+    name: "滿意度調查模組"
+    description: "通話結束滿意度調查收集與統計"
+    related_fr: [FR-IVR-006]
+    related_ad: []
+
+  - id: M-IVR-06
+    name: "通話防護模組"
+    description: "非業務阻擋、惡意攻擊防範、敏感詞過濾、頻率限制"
+    related_fr: [FR-IVR-007]
+    related_ad: [AD-001]
+
+  # STT 模組
+  - id: M-STT-01
+    name: "即時語音辨識模組"
+    description: "faster-whisper 引擎、中英文混合辨識、串流轉寫"
+    related_fr: [FR-STT-001]
+    related_ad: [AD-003]
+
+  - id: M-STT-02
+    name: "意圖辨識模組"
+    description: "語音內容分類、意圖識別、路由分派"
+    related_fr: [FR-STT-002]
+    related_ad: [AD-003]
+
+  - id: M-STT-03
+    name: "語音活動偵測模組"
+    description: "VAD 斷點偵測、停頓判斷、發言結束觸發"
+    related_fr: [FR-STT-003]
+    related_ad: [AD-003]
+
+  # TTS 模組
+  - id: M-TTS-01
+    name: "即時語音合成模組"
+    description: "中英文 TTS 引擎、串流合成播放"
+    related_fr: [FR-TTS-001]
+    related_ad: [AD-003]
+
+  - id: M-TTS-02
+    name: "動態選單合成模組"
+    description: "依後台設定動態生成語音選單"
+    related_fr: [FR-TTS-002]
+    related_ad: [AD-003]
+
+  # LLM 模組
+  - id: M-LLM-01
+    name: "LLM 推論引擎模組"
+    description: "vLLM 推論服務、GPU 資源管理、多實例負載均衡"
+    related_fr: [FR-LLM-001]
+    related_ad: [AD-002, AD-004]
+
+  - id: M-LLM-02
+    name: "語意理解與對話模組"
+    description: "語意理解、問答生成、上下文管理、連續對話"
+    related_fr: [FR-LLM-002, FR-LLM-003]
+    related_ad: [AD-004]
+
+  - id: M-LLM-03
+    name: "文字處理模組"
+    description: "關鍵詞識別、同義詞擴展、敏感詞過濾、錯別字修正"
+    related_fr: [FR-LLM-004]
+    related_ad: [AD-004]
+
+  - id: M-LLM-04
+    name: "對話紀錄管理模組"
+    description: "對話紀錄儲存、查詢、多格式匯出"
+    related_fr: [FR-LLM-007]
+    related_ad: []
+
+  - id: M-LLM-05
+    name: "後送案件分析模組"
+    description: "案件自動分類、優先級判定、情感分析、趨勢預測"
+    related_fr: [FR-LLM-008]
+    related_ad: [AD-002, AD-004]
+
+  # KB 模組（知識庫）
+  - id: M-KB-01
+    name: "知識庫管理模組"
+    description: "知識內容 CRUD、版本管理、自動學習、向量化索引"
+    related_fr: [FR-LLM-005]
+    related_ad: [AD-004, AD-008]
+
+  - id: M-KB-02
+    name: "知識庫權限管理模組"
+    description: "角色權限設定、多層級使用者管理、操作日誌"
+    related_fr: [FR-LLM-006]
+    related_ad: [AD-001]
+
+  # AGT 模組
+  - id: M-AGT-01
+    name: "數位通道接入模組"
+    description: "≥30 埠數位通道管理、WebSocket 連線、負載均衡"
+    related_fr: [FR-AGT-001]
+    related_ad: [AD-005]
+
+  - id: M-AGT-02
+    name: "向量資料庫整合模組"
+    description: "Qdrant 整合、HNSW 索引、語意檢索、版本管理"
+    related_fr: [FR-AGT-002]
+    related_ad: [AD-002, AD-008]
+
+  - id: M-AGT-03
+    name: "RAG 問答引擎模組"
+    description: "檢索增強生成、引用來源標註、上下文問答"
+    related_fr: [FR-AGT-003, FR-AGT-004]
+    related_ad: [AD-004]
+
+  - id: M-AGT-04
+    name: "個性化問答模組"
+    description: "使用者歷史分析、個性化回答生成、推薦引擎"
+    related_fr: [FR-AGT-005]
+    related_ad: [AD-004]
+
+  - id: M-AGT-05
+    name: "Web/App 整合模組"
+    description: "Web/App 數位客服介面整合、AI 轉真人、對話摘要"
+    related_fr: [FR-AGT-006]
+    related_ad: [AD-005]
+
+  - id: M-AGT-06
+    name: "模型優化管理模組"
+    description: "回饋學習機制、模型校正流程、效能監控"
+    related_fr: [FR-AGT-008]
+    related_ad: [AD-004]
+
+  # SMS 模組
+  - id: M-SMS-01
+    name: "簡訊服務模組"
+    description: "雙備援 SMS 收發、AI 自動回覆、客服同步通知、紀錄保存 ≥5 年"
+    related_fr: [FR-AGT-007]
+    related_ad: [AD-005]
+
+  # QI 模組
+  - id: M-QI-01
+    name: "質檢數據匯入模組"
+    description: "多格式音檔匯入、自動排程、批次任務管理"
+    related_fr: [FR-QI-001]
+    related_ad: [AD-002]
+
+  - id: M-QI-02
+    name: "質檢語音轉寫模組"
+    description: "錄音轉文字、業務場景術語優化辨識"
+    related_fr: [FR-QI-002]
+    related_ad: [AD-003]
+
+  - id: M-QI-03
+    name: "質檢規則引擎模組"
+    description: "自訂質檢規則、權重設定、自動評分"
+    related_fr: [FR-QI-003]
+    related_ad: []
+
+  - id: M-QI-04
+    name: "通話行為偵測模組"
+    description: "靜音偵測、插話偵測、專員行為分析"
+    related_fr: [FR-QI-004]
+    related_ad: []
+
+  - id: M-QI-05
+    name: "情緒分析模組"
+    description: "語調情緒識別、負面情緒標記、異常通話標註"
+    related_fr: [FR-QI-005]
+    related_ad: [AD-002]
+
+  - id: M-QI-06
+    name: "質檢警報模組"
+    description: "異常偵測、警報通知、督導推送"
+    related_fr: [FR-QI-006]
+    related_ad: []
+
+  - id: M-QI-07
+    name: "質檢報表模組"
+    description: "活動報表、專員績效報表、原因分析報表"
+    related_fr: [FR-QI-007]
+    related_ad: []
+
+  # RPT 模組
+  - id: M-RPT-01
+    name: "統計分析報表模組"
+    description: "對話服務、AI 管理、知識點、滿意度統計報表"
+    related_fr: [FR-RPT-001]
+    related_ad: []
+
+  - id: M-RPT-02
+    name: "儀表板模組"
+    description: "視覺化儀表板、自訂篩選、圖表引擎"
+    related_fr: [FR-RPT-002]
+    related_ad: []
+
+  - id: M-RPT-03
+    name: "客製報表模組"
+    description: "客製報表開發框架、保固期 ≥10 個報表"
+    related_fr: [FR-RPT-003]
+    related_ad: []
+
+  # WS 模組（值機平台）
+  - id: M-WS-01
+    name: "座席操作與通話控制模組"
+    description: "值機員操作介面、CTI 通話控制整合、來電資訊顯示"
+    related_fr: [FR-WS-001]
+    related_ad: [AD-007]
+
+  - id: M-WS-02
+    name: "AI 知識輔助模組"
+    description: "即時 AI 建議推送、知識庫內容檢索、輔助應答"
+    related_fr: [FR-WS-002]
+    related_ad: [AD-004]
+
+  - id: M-WS-03
+    name: "對話摘要與工單模組"
+    description: "自動摘要生成、後送工單 CRUD、工單追蹤"
+    related_fr: [FR-WS-003]
+    related_ad: [AD-004]
+
+  - id: M-WS-04
+    name: "督導監控模組"
+    description: "座席狀態總覽、通話監聽/密語/介入、即時服務指標"
+    related_fr: [FR-WS-004]
+    related_ad: [AD-005]
+
+  - id: M-WS-05
+    name: "座席狀態管理模組"
+    description: "簽入簽出、狀態切換、狀態時長統計"
+    related_fr: [FR-WS-005]
+    related_ad: []
+
+  # ADM 模組（管理後台）
+  - id: M-ADM-01
+    name: "系統參數設定模組"
+    description: "IVR 話術設定、AI 策略設定、通道分配、服務時段管理"
+    related_fr: [FR-ADM-001]
+    related_ad: [AD-006]
+
+  - id: M-ADM-02
+    name: "帳號與權限管理模組"
+    description: "AD/LDAP 整合、RBAC 角色管理、權限設定"
+    related_fr: [FR-ADM-002]
+    related_ad: [AD-001]
+
+  - id: M-ADM-03
+    name: "系統監控模組"
+    description: "Prometheus/Grafana 整合、健康狀態、告警通知"
+    related_fr: [FR-ADM-003]
+    related_ad: [AD-005, AD-006]
+
+  - id: M-ADM-04
+    name: "日誌與稽核模組"
+    description: "集中日誌管理、存取日誌、稽核追蹤、≥6 個月保留"
+    related_fr: [FR-ADM-004]
+    related_ad: [AD-001]
+
+  - id: M-ADM-05
+    name: "備份回復管理模組"
+    description: "備份排程、手動備份、回復操作、狀態監控"
+    related_fr: [FR-ADM-005]
+    related_ad: [AD-005]
+
+
+# =============================================================
+# 3. 程式編號（P）清單
+# =============================================================
+
+programs:
+
+  - id: P-IVR-01
+    name: "語音通道與來電應答程式"
+    module: M-IVR-01
+    related_fr: [FR-IVR-001, FR-IVR-002]
+
+  - id: P-IVR-02
+    name: "多輪對話引擎程式"
+    module: M-IVR-02
+    related_fr: [FR-IVR-003]
+
+  - id: P-IVR-03
+    name: "真人轉接服務程式"
+    module: M-IVR-03
+    related_fr: [FR-IVR-004]
+
+  - id: P-IVR-04
+    name: "DTMF 與動態選單程式"
+    module: M-IVR-04
+    related_fr: [FR-IVR-005]
+
+  - id: P-IVR-05
+    name: "滿意度調查程式"
+    module: M-IVR-05
+    related_fr: [FR-IVR-006]
+
+  - id: P-IVR-06
+    name: "通話防護程式"
+    module: M-IVR-06
+    related_fr: [FR-IVR-007]
+
+  - id: P-STT-01
+    name: "即時語音辨識程式"
+    module: M-STT-01
+    related_fr: [FR-STT-001]
+
+  - id: P-STT-02
+    name: "意圖辨識程式"
+    module: M-STT-02
+    related_fr: [FR-STT-002]
+
+  - id: P-STT-03
+    name: "語音活動偵測程式"
+    module: M-STT-03
+    related_fr: [FR-STT-003]
+
+  - id: P-TTS-01
+    name: "即時語音合成程式"
+    module: M-TTS-01
+    related_fr: [FR-TTS-001]
+
+  - id: P-TTS-02
+    name: "動態選單合成程式"
+    module: M-TTS-02
+    related_fr: [FR-TTS-002]
+
+  - id: P-LLM-01
+    name: "LLM 推論引擎程式"
+    module: M-LLM-01
+    related_fr: [FR-LLM-001]
+
+  - id: P-LLM-02
+    name: "語意理解與對話程式"
+    module: M-LLM-02
+    related_fr: [FR-LLM-002, FR-LLM-003]
+
+  - id: P-LLM-03
+    name: "文字處理程式"
+    module: M-LLM-03
+    related_fr: [FR-LLM-004]
+
+  - id: P-LLM-04
+    name: "對話紀錄管理程式"
+    module: M-LLM-04
+    related_fr: [FR-LLM-007]
+
+  - id: P-LLM-05
+    name: "後送案件分析程式"
+    module: M-LLM-05
+    related_fr: [FR-LLM-008]
+
+  - id: P-KB-01
+    name: "知識庫管理程式"
+    module: M-KB-01
+    related_fr: [FR-LLM-005]
+
+  - id: P-KB-02
+    name: "知識庫權限管理程式"
+    module: M-KB-02
+    related_fr: [FR-LLM-006]
+
+  - id: P-AGT-01
+    name: "數位通道接入程式"
+    module: M-AGT-01
+    related_fr: [FR-AGT-001]
+
+  - id: P-AGT-02
+    name: "向量資料庫整合程式"
+    module: M-AGT-02
+    related_fr: [FR-AGT-002]
+
+  - id: P-AGT-03
+    name: "RAG 問答引擎程式"
+    module: M-AGT-03
+    related_fr: [FR-AGT-003, FR-AGT-004]
+
+  - id: P-AGT-04
+    name: "個性化問答程式"
+    module: M-AGT-04
+    related_fr: [FR-AGT-005]
+
+  - id: P-AGT-05
+    name: "Web/App 整合程式"
+    module: M-AGT-05
+    related_fr: [FR-AGT-006]
+
+  - id: P-AGT-06
+    name: "模型優化管理程式"
+    module: M-AGT-06
+    related_fr: [FR-AGT-008]
+
+  - id: P-SMS-01
+    name: "簡訊服務程式"
+    module: M-SMS-01
+    related_fr: [FR-AGT-007]
+
+  - id: P-QI-01
+    name: "質檢數據匯入程式"
+    module: M-QI-01
+    related_fr: [FR-QI-001]
+
+  - id: P-QI-02
+    name: "質檢語音轉寫程式"
+    module: M-QI-02
+    related_fr: [FR-QI-002]
+
+  - id: P-QI-03
+    name: "質檢規則引擎程式"
+    module: M-QI-03
+    related_fr: [FR-QI-003]
+
+  - id: P-QI-04
+    name: "通話行為偵測程式"
+    module: M-QI-04
+    related_fr: [FR-QI-004]
+
+  - id: P-QI-05
+    name: "情緒分析程式"
+    module: M-QI-05
+    related_fr: [FR-QI-005]
+
+  - id: P-QI-06
+    name: "質檢警報程式"
+    module: M-QI-06
+    related_fr: [FR-QI-006]
+
+  - id: P-QI-07
+    name: "質檢報表程式"
+    module: M-QI-07
+    related_fr: [FR-QI-007]
+
+  - id: P-RPT-01
+    name: "統計分析報表程式"
+    module: M-RPT-01
+    related_fr: [FR-RPT-001]
+
+  - id: P-RPT-02
+    name: "儀表板程式"
+    module: M-RPT-02
+    related_fr: [FR-RPT-002]
+
+  - id: P-RPT-03
+    name: "客製報表程式"
+    module: M-RPT-03
+    related_fr: [FR-RPT-003]
+
+  # WS 程式
+  - id: P-WS-01
+    name: "座席操作與通話控制程式"
+    module: M-WS-01
+    related_fr: [FR-WS-001]
+
+  - id: P-WS-02
+    name: "AI 知識輔助程式"
+    module: M-WS-02
+    related_fr: [FR-WS-002]
+
+  - id: P-WS-03
+    name: "對話摘要與工單程式"
+    module: M-WS-03
+    related_fr: [FR-WS-003]
+
+  - id: P-WS-04
+    name: "督導監控程式"
+    module: M-WS-04
+    related_fr: [FR-WS-004]
+
+  - id: P-WS-05
+    name: "座席狀態管理程式"
+    module: M-WS-05
+    related_fr: [FR-WS-005]
+
+  # ADM 程式
+  - id: P-ADM-01
+    name: "系統參數設定程式"
+    module: M-ADM-01
+    related_fr: [FR-ADM-001]
+
+  - id: P-ADM-02
+    name: "帳號與權限管理程式"
+    module: M-ADM-02
+    related_fr: [FR-ADM-002]
+
+  - id: P-ADM-03
+    name: "系統監控程式"
+    module: M-ADM-03
+    related_fr: [FR-ADM-003]
+
+  - id: P-ADM-04
+    name: "日誌與稽核程式"
+    module: M-ADM-04
+    related_fr: [FR-ADM-004]
+
+  - id: P-ADM-05
+    name: "備份回復管理程式"
+    module: M-ADM-05
+    related_fr: [FR-ADM-005]
+
+
+# =============================================================
+# 4. 架構決策編號（AD）— 引用自 decisions.yaml SECTION H
+# =============================================================
+
+architecture_decisions:
+  - id: AD-001
+    decision: "六層式架構（基礎設施/平台安全/資料管理/AI服務/通道接入/使用者）"
+    rationale: "隔離 AI 模組與既有系統，符合零衝擊要求"
+    impacts: [M-IVR-06, M-KB-02]
+
+  - id: AD-002
+    decision: "GPU#0 專責 LLM 推論，GPU#1 負責 Embedding + QI + 擴充預留"
+    rationale: "避免即時推論與批次任務搶資源，確保 5 秒回應 SLA"
+    impacts: [M-LLM-01, M-LLM-05, M-AGT-02, M-QI-01, M-QI-05]
+
+  - id: AD-003
+    decision: "STT/TTS 跑 CPU，不上 GPU"
+    rationale: "串流推論適合 CPU 低延遲特性，GPU 留給 LLM"
+    impacts: [M-STT-01, M-STT-02, M-STT-03, M-TTS-01, M-TTS-02, M-QI-02]
+
+  - id: AD-004
+    decision: "LLM 選用 Llama 3.1 8B AWQ 量化"
+    rationale: "8GB VRAM，單卡可跑 6 實例，開源免授權費"
+    impacts: [M-LLM-01, M-LLM-02, M-LLM-03, M-LLM-05, M-KB-01, M-AGT-03, M-AGT-04, M-AGT-06, M-IVR-02]
+
+  - id: AD-005
+    decision: "HA 採 Active-Active + Failover"
+    rationale: "正常時 50/50 負載分攤，故障時單機承載 100%"
+    impacts: [M-AGT-01, M-AGT-05, M-SMS-01]
+
+  - id: AD-006
+    decision: "Docker Compose 部署，不用 K8s"
+    rationale: "6~8 台伺服器規模不需要 K8s 複雜度，降低台鐵後續維運門檻"
+    impacts: []  # 影響全部模組之部署方式
+
+  - id: AD-007
+    decision: "SIP/RTP fork 方式介接既有語音系統"
+    rationale: "不修改 MES Server 任何設定，AI-IVR 被動接收語音流"
+    impacts: [M-IVR-01, M-IVR-03, M-IVR-04]
+
+  - id: AD-008
+    decision: "所有技術選型優先開源方案"
+    rationale: "符合授權到期後可續用要求，降低長期 TCO"
+    impacts: [M-KB-01, M-AGT-02]
+
+
+# =============================================================
+# 5. 測試案例編號（TC）清單 — 1:1 對應 FR
+# =============================================================
+
+test_cases:
+
+  # IVR
+  - id: TC-IVR-001
+    name: "語音通道與 CTI 整合測試"
+    fr: FR-IVR-001
+    test_type: [integration, stress]
+    kpi_target: "≥30 埠同時通話"
+    test_report_deliverable: "09"
+
+  - id: TC-IVR-002
+    name: "智慧來電應答測試"
+    fr: FR-IVR-002
+    test_type: [functional, performance]
+    kpi_target: "正確率 ≥85%、回應 ≤5 秒"
+    test_report_deliverable: "09"
+
+  - id: TC-IVR-003
+    name: "多輪對話引導測試"
+    fr: FR-IVR-003
+    test_type: [functional]
+    kpi_target: "多輪對話上下文正確銜接"
+    test_report_deliverable: "09"
+
+  - id: TC-IVR-004
+    name: "真人轉接測試"
+    fr: FR-IVR-004
+    test_type: [functional, integration]
+    kpi_target: "轉接成功率 100%，摘要正確呈現"
+    test_report_deliverable: "09"
+
+  - id: TC-IVR-005
+    name: "按碼偵測與動態選單測試"
+    fr: FR-IVR-005
+    test_type: [functional]
+    kpi_target: "DTMF 偵測正確率 100%"
+    test_report_deliverable: "09"
+
+  - id: TC-IVR-006
+    name: "滿意度調查測試"
+    fr: FR-IVR-006
+    test_type: [functional]
+    kpi_target: "調查結果正確收集統計"
+    test_report_deliverable: "09"
+
+  - id: TC-IVR-007
+    name: "防護機制測試"
+    fr: FR-IVR-007
+    test_type: [functional, security]
+    kpi_target: "非業務阻擋、惡意攻擊攔截"
+    test_report_deliverable: "09"
+
+  # STT
+  - id: TC-STT-001
+    name: "即時語音辨識率測試"
+    fr: FR-STT-001
+    test_type: [functional, performance]
+    kpi_target: "辨識率 ≥85%（200 音檔，中英 4:1）"
+    test_report_deliverable: "09"
+
+  - id: TC-STT-002
+    name: "意圖辨識測試"
+    fr: FR-STT-002
+    test_type: [functional]
+    kpi_target: "意圖分類正確率驗證"
+    test_report_deliverable: "09"
+
+  - id: TC-STT-003
+    name: "語音斷點偵測測試"
+    fr: FR-STT-003
+    test_type: [functional, performance]
+    kpi_target: "VAD 準確觸發，不影響回應延遲"
+    test_report_deliverable: "09"
+
+  # TTS
+  - id: TC-TTS-001
+    name: "即時語音合成測試"
+    fr: FR-TTS-001
+    test_type: [functional, performance]
+    kpi_target: "合成延遲不影響 ≤5 秒總回應"
+    test_report_deliverable: "09"
+
+  - id: TC-TTS-002
+    name: "動態選單合成測試"
+    fr: FR-TTS-002
+    test_type: [functional]
+    kpi_target: "選單內容正確合成播放"
+    test_report_deliverable: "09"
+
+  # LLM
+  - id: TC-LLM-001
+    name: "GPU 高併發穩定性測試"
+    fr: FR-LLM-001
+    test_type: [stress, performance]
+    kpi_target: "多實例併發下回應 ≤5 秒"
+    test_report_deliverable: "09"
+
+  - id: TC-LLM-002
+    name: "語意理解與問答測試"
+    fr: FR-LLM-002
+    test_type: [functional]
+    kpi_target: "正確率 ≥85%（200 題）"
+    test_report_deliverable: "09"
+
+  - id: TC-LLM-003
+    name: "上下文連續對話測試"
+    fr: FR-LLM-003
+    test_type: [functional]
+    kpi_target: "多輪對話上下文正確"
+    test_report_deliverable: "09"
+
+  - id: TC-LLM-004
+    name: "關鍵詞與文字修正測試"
+    fr: FR-LLM-004
+    test_type: [functional]
+    kpi_target: "同義詞、敏感詞、錯別字正確處理"
+    test_report_deliverable: "09"
+
+  - id: TC-LLM-005
+    name: "知識庫維護與學習測試"
+    fr: FR-LLM-005
+    test_type: [functional]
+    kpi_target: "CRUD 操作正確、版本管理完整"
+    test_report_deliverable: "09"
+
+  - id: TC-LLM-006
+    name: "權限控管測試"
+    fr: FR-LLM-006
+    test_type: [functional, security]
+    kpi_target: "角色權限隔離正確，日誌完整"
+    test_report_deliverable: "09"
+
+  - id: TC-LLM-007
+    name: "對話紀錄匯出測試"
+    fr: FR-LLM-007
+    test_type: [functional]
+    kpi_target: "五種格式匯出正確完整"
+    test_report_deliverable: "09"
+
+  - id: TC-LLM-008
+    name: "後送案件分析測試"
+    fr: FR-LLM-008
+    test_type: [functional]
+    kpi_target: "分類正確率 ≥85%（200 筆）"
+    test_report_deliverable: "09"
+
+  # AGT
+  - id: TC-AGT-001
+    name: "數位通道併發測試"
+    fr: FR-AGT-001
+    test_type: [stress, performance]
+    kpi_target: "≥30 埠同時連線"
+    test_report_deliverable: "09"
+
+  - id: TC-AGT-002
+    name: "向量資料庫檢索測試"
+    fr: FR-AGT-002
+    test_type: [functional, performance]
+    kpi_target: "語意檢索準確率驗證"
+    test_report_deliverable: "09"
+
+  - id: TC-AGT-003
+    name: "互動式智慧問答測試"
+    fr: FR-AGT-003
+    test_type: [functional, performance]
+    kpi_target: "正確率 ≥85%、回應 ≤5 秒"
+    test_report_deliverable: "09"
+
+  - id: TC-AGT-004
+    name: "RAG 引用來源標註測試"
+    fr: FR-AGT-004
+    test_type: [functional]
+    kpi_target: "引用來源正確標註"
+    test_report_deliverable: "09"
+
+  - id: TC-AGT-005
+    name: "個性化問答測試"
+    fr: FR-AGT-005
+    test_type: [functional]
+    kpi_target: "基於歷史對話之回答相關性驗證"
+    test_report_deliverable: "09"
+
+  - id: TC-AGT-006
+    name: "Web/App 整合轉接測試"
+    fr: FR-AGT-006
+    test_type: [functional, integration]
+    kpi_target: "跨通道轉接成功、摘要正確"
+    test_report_deliverable: "09"
+
+  - id: TC-AGT-007
+    name: "SMS 簡訊服務測試"
+    fr: FR-AGT-007
+    test_type: [functional, integration]
+    kpi_target: "雙備援收發正常、紀錄保存驗證"
+    test_report_deliverable: "09"
+
+  - id: TC-AGT-008
+    name: "系統持續優化機制測試"
+    fr: FR-AGT-008
+    test_type: [functional]
+    kpi_target: "回饋學習與校正流程驗證"
+    test_report_deliverable: "09"
+
+  # QI
+  - id: TC-QI-001
+    name: "質檢數據匯入測試"
+    fr: FR-QI-001
+    test_type: [functional]
+    kpi_target: "多格式匯入正確，排程執行"
+    test_report_deliverable: "09"
+
+  - id: TC-QI-002
+    name: "質檢語音轉寫測試"
+    fr: FR-QI-002
+    test_type: [functional, performance]
+    kpi_target: "15min 錄音 → ≤5min 完成"
+    test_report_deliverable: "09"
+
+  - id: TC-QI-003
+    name: "質檢規則與評分測試"
+    fr: FR-QI-003
+    test_type: [functional]
+    kpi_target: "自訂規則正確評分"
+    test_report_deliverable: "09"
+
+  - id: TC-QI-004
+    name: "靜音與插話偵測測試"
+    fr: FR-QI-004
+    test_type: [functional]
+    kpi_target: "靜音/插話偵測準確"
+    test_report_deliverable: "09"
+
+  - id: TC-QI-005
+    name: "情緒分析測試"
+    fr: FR-QI-005
+    test_type: [functional]
+    kpi_target: "情緒識別與標記正確"
+    test_report_deliverable: "09"
+
+  - id: TC-QI-006
+    name: "質檢警報機制測試"
+    fr: FR-QI-006
+    test_type: [functional]
+    kpi_target: "異常偵測觸發警報通知"
+    test_report_deliverable: "09"
+
+  - id: TC-QI-007
+    name: "質檢報表測試"
+    fr: FR-QI-007
+    test_type: [functional]
+    kpi_target: "多維度報表正確產出"
+    test_report_deliverable: "09"
+
+  # RPT
+  - id: TC-RPT-001
+    name: "統計分析報表測試"
+    fr: FR-RPT-001
+    test_type: [functional]
+    kpi_target: "各類報表數據正確"
+    test_report_deliverable: "09"
+
+  - id: TC-RPT-002
+    name: "儀表板功能測試"
+    fr: FR-RPT-002
+    test_type: [functional]
+    kpi_target: "篩選、時間區間、圖表正確呈現"
+    test_report_deliverable: "09"
+
+  - id: TC-RPT-003
+    name: "客製報表測試"
+    fr: FR-RPT-003
+    test_type: [functional]
+    kpi_target: "≥10 個客製報表正確產出"
+    test_report_deliverable: "09"
+
+  # WS
+  - id: TC-WS-001
+    name: "座席操作與通話控制測試"
+    fr: FR-WS-001
+    test_type: [functional, integration]
+    kpi_target: "通話控制功能完整正確"
+    test_report_deliverable: "09"
+
+  - id: TC-WS-002
+    name: "AI 知識輔助測試"
+    fr: FR-WS-002
+    test_type: [functional]
+    kpi_target: "即時推送建議與來源正確"
+    test_report_deliverable: "09"
+
+  - id: TC-WS-003
+    name: "對話摘要與工單測試"
+    fr: FR-WS-003
+    test_type: [functional]
+    kpi_target: "摘要生成正確、工單流程完整"
+    test_report_deliverable: "09"
+
+  - id: TC-WS-004
+    name: "督導監控與介入測試"
+    fr: FR-WS-004
+    test_type: [functional, integration]
+    kpi_target: "監聽/密語/介入功能正確"
+    test_report_deliverable: "09"
+
+  - id: TC-WS-005
+    name: "座席狀態管理測試"
+    fr: FR-WS-005
+    test_type: [functional]
+    kpi_target: "狀態切換正確、時長統計準確"
+    test_report_deliverable: "09"
+
+  # ADM
+  - id: TC-ADM-001
+    name: "系統參數設定測試"
+    fr: FR-ADM-001
+    test_type: [functional]
+    kpi_target: "參數設定即時生效"
+    test_report_deliverable: "09"
+
+  - id: TC-ADM-002
+    name: "帳號與權限管理測試"
+    fr: FR-ADM-002
+    test_type: [functional, security]
+    kpi_target: "RBAC 權限隔離正確、AD 整合驗證"
+    test_report_deliverable: "09"
+
+  - id: TC-ADM-003
+    name: "系統監控儀表板測試"
+    fr: FR-ADM-003
+    test_type: [functional, integration]
+    kpi_target: "指標即時更新、告警正確觸發"
+    test_report_deliverable: "09"
+
+  - id: TC-ADM-004
+    name: "日誌與稽核追蹤測試"
+    fr: FR-ADM-004
+    test_type: [functional, security]
+    kpi_target: "日誌完整記錄、保留期限驗證"
+    test_report_deliverable: "09"
+
+  - id: TC-ADM-005
+    name: "備份回復管理測試"
+    fr: FR-ADM-005
+    test_type: [functional]
+    kpi_target: "備份排程執行、回復操作成功"
+    test_report_deliverable: "09"
+
+
+# =============================================================
+# 6. 跨文件引用對照表（完整追溯鏈）
+# =============================================================
+# 追溯路徑: FR → TC → 測試結果(交付物#09) → 模組(M) → 程式(P)
+#
+# ⚠ 語意說明：
+#   Section 1 的 deliverable_ref = 「哪些交付物需要描述/定義此需求」（設計階段文件）
+#   Section 6 的 deliverables  = 「完整追溯鏈涵蓋的全部交付物」（含操作手冊#07、測試報告#09、結案#13 等）
+#   兩者範圍不同是正確的：Section 6 ⊇ Section 1
+#
+# 交付物編號對照（依契約第八條交付項目一覽表）:
+#   01 = 工作計畫書                    02 = 系統分析報告書(含需求規格說明)
+#   03 = 程式設計規格報告書            04 = 教育訓練計畫書
+#   05 = 測試計畫書(含壓力測試及資安檢測) 06 = 軟硬體清單及系統架構圖
+#   07 = 軟體使用及維護手冊            08 = 系統上線執行計畫書
+#   09 = 測試報告書(含壓力測試及資安檢測) 10 = 程式設計書
+#   11 = 原始程式碼光碟                12 = 教育訓練執行報告書
+#   13 = 結案報告
+
+traceability_matrix:
+
+  # --- IVR ---
+  - fr: FR-IVR-001
+    tc: TC-IVR-001
+    test_report: "09"
+    module: M-IVR-01
+    program: P-IVR-01
+    deliverables: ["02", "03", "05", "06", "07", "09", "13"]
+
+  - fr: FR-IVR-002
+    tc: TC-IVR-002
+    test_report: "09"
+    module: M-IVR-01
+    program: P-IVR-01
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-IVR-003
+    tc: TC-IVR-003
+    test_report: "09"
+    module: M-IVR-02
+    program: P-IVR-02
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-IVR-004
+    tc: TC-IVR-004
+    test_report: "09"
+    module: M-IVR-03
+    program: P-IVR-03
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-IVR-005
+    tc: TC-IVR-005
+    test_report: "09"
+    module: M-IVR-04
+    program: P-IVR-04
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-IVR-006
+    tc: TC-IVR-006
+    test_report: "09"
+    module: M-IVR-05
+    program: P-IVR-05
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-IVR-007
+    tc: TC-IVR-007
+    test_report: "09"
+    module: M-IVR-06
+    program: P-IVR-06
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  # --- STT ---
+  - fr: FR-STT-001
+    tc: TC-STT-001
+    test_report: "09"
+    module: M-STT-01
+    program: P-STT-01
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-STT-002
+    tc: TC-STT-002
+    test_report: "09"
+    module: M-STT-02
+    program: P-STT-02
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-STT-003
+    tc: TC-STT-003
+    test_report: "09"
+    module: M-STT-03
+    program: P-STT-03
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  # --- TTS ---
+  - fr: FR-TTS-001
+    tc: TC-TTS-001
+    test_report: "09"
+    module: M-TTS-01
+    program: P-TTS-01
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-TTS-002
+    tc: TC-TTS-002
+    test_report: "09"
+    module: M-TTS-02
+    program: P-TTS-02
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  # --- LLM ---
+  - fr: FR-LLM-001
+    tc: TC-LLM-001
+    test_report: "09"
+    module: M-LLM-01
+    program: P-LLM-01
+    deliverables: ["02", "03", "05", "06", "09", "13"]
+
+  - fr: FR-LLM-002
+    tc: TC-LLM-002
+    test_report: "09"
+    module: M-LLM-02
+    program: P-LLM-02
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-LLM-003
+    tc: TC-LLM-003
+    test_report: "09"
+    module: M-LLM-02
+    program: P-LLM-02
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-LLM-004
+    tc: TC-LLM-004
+    test_report: "09"
+    module: M-LLM-03
+    program: P-LLM-03
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-LLM-005
+    tc: TC-LLM-005
+    test_report: "09"
+    module: M-KB-01
+    program: P-KB-01
+    deliverables: ["02", "03", "05", "07", "09", "13"]
+
+  - fr: FR-LLM-006
+    tc: TC-LLM-006
+    test_report: "09"
+    module: M-KB-02
+    program: P-KB-02
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-LLM-007
+    tc: TC-LLM-007
+    test_report: "09"
+    module: M-LLM-04
+    program: P-LLM-04
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-LLM-008
+    tc: TC-LLM-008
+    test_report: "09"
+    module: M-LLM-05
+    program: P-LLM-05
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  # --- AGT ---
+  - fr: FR-AGT-001
+    tc: TC-AGT-001
+    test_report: "09"
+    module: M-AGT-01
+    program: P-AGT-01
+    deliverables: ["02", "03", "05", "06", "09", "13"]
+
+  - fr: FR-AGT-002
+    tc: TC-AGT-002
+    test_report: "09"
+    module: M-AGT-02
+    program: P-AGT-02
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-AGT-003
+    tc: TC-AGT-003
+    test_report: "09"
+    module: M-AGT-03
+    program: P-AGT-03
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-AGT-004
+    tc: TC-AGT-004
+    test_report: "09"
+    module: M-AGT-03
+    program: P-AGT-03
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-AGT-005
+    tc: TC-AGT-005
+    test_report: "09"
+    module: M-AGT-04
+    program: P-AGT-04
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-AGT-006
+    tc: TC-AGT-006
+    test_report: "09"
+    module: M-AGT-05
+    program: P-AGT-05
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-AGT-007
+    tc: TC-AGT-007
+    test_report: "09"
+    module: M-SMS-01
+    program: P-SMS-01
+    deliverables: ["02", "03", "05", "06", "09", "13"]
+
+  - fr: FR-AGT-008
+    tc: TC-AGT-008
+    test_report: "09"
+    module: M-AGT-06
+    program: P-AGT-06
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  # --- QI ---
+  - fr: FR-QI-001
+    tc: TC-QI-001
+    test_report: "09"
+    module: M-QI-01
+    program: P-QI-01
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-QI-002
+    tc: TC-QI-002
+    test_report: "09"
+    module: M-QI-02
+    program: P-QI-02
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-QI-003
+    tc: TC-QI-003
+    test_report: "09"
+    module: M-QI-03
+    program: P-QI-03
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-QI-004
+    tc: TC-QI-004
+    test_report: "09"
+    module: M-QI-04
+    program: P-QI-04
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-QI-005
+    tc: TC-QI-005
+    test_report: "09"
+    module: M-QI-05
+    program: P-QI-05
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-QI-006
+    tc: TC-QI-006
+    test_report: "09"
+    module: M-QI-06
+    program: P-QI-06
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-QI-007
+    tc: TC-QI-007
+    test_report: "09"
+    module: M-QI-07
+    program: P-QI-07
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  # --- RPT ---
+  - fr: FR-RPT-001
+    tc: TC-RPT-001
+    test_report: "09"
+    module: M-RPT-01
+    program: P-RPT-01
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-RPT-002
+    tc: TC-RPT-002
+    test_report: "09"
+    module: M-RPT-02
+    program: P-RPT-02
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-RPT-003
+    tc: TC-RPT-003
+    test_report: "09"
+    module: M-RPT-03
+    program: P-RPT-03
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  # --- WS ---
+  - fr: FR-WS-001
+    tc: TC-WS-001
+    test_report: "09"
+    module: M-WS-01
+    program: P-WS-01
+    deliverables: ["02", "03", "05", "06", "07", "09", "13"]
+
+  - fr: FR-WS-002
+    tc: TC-WS-002
+    test_report: "09"
+    module: M-WS-02
+    program: P-WS-02
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-WS-003
+    tc: TC-WS-003
+    test_report: "09"
+    module: M-WS-03
+    program: P-WS-03
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-WS-004
+    tc: TC-WS-004
+    test_report: "09"
+    module: M-WS-04
+    program: P-WS-04
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-WS-005
+    tc: TC-WS-005
+    test_report: "09"
+    module: M-WS-05
+    program: P-WS-05
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  # --- ADM ---
+  - fr: FR-ADM-001
+    tc: TC-ADM-001
+    test_report: "09"
+    module: M-ADM-01
+    program: P-ADM-01
+    deliverables: ["02", "03", "05", "07", "09", "13"]
+
+  - fr: FR-ADM-002
+    tc: TC-ADM-002
+    test_report: "09"
+    module: M-ADM-02
+    program: P-ADM-02
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-ADM-003
+    tc: TC-ADM-003
+    test_report: "09"
+    module: M-ADM-03
+    program: P-ADM-03
+    deliverables: ["02", "03", "05", "07", "09", "13"]
+
+  - fr: FR-ADM-004
+    tc: TC-ADM-004
+    test_report: "09"
+    module: M-ADM-04
+    program: P-ADM-04
+    deliverables: ["02", "03", "05", "09", "13"]
+
+  - fr: FR-ADM-005
+    tc: TC-ADM-005
+    test_report: "09"
+    module: M-ADM-05
+    program: P-ADM-05
+    deliverables: ["02", "03", "05", "07", "09", "13"]
+
+
+# =============================================================
+# 7. 統計摘要
+# =============================================================
+
+summary:
+  total_fr: 48
+  total_tc: 48
+  total_modules: 45
+  total_programs: 45
+  total_ad: 8
+  module_breakdown:
+    IVR: {fr: 7, modules: 6, programs: 6}
+    STT: {fr: 3, modules: 3, programs: 3}
+    TTS: {fr: 2, modules: 2, programs: 2}
+    LLM: {fr: 8, modules: 5, programs: 5}
+    KB:  {fr: 0, modules: 2, programs: 2, note: "FR 編號在 LLM 下（FR-LLM-005/006），模組獨立拆分"}
+    AGT: {fr: 8, modules: 6, programs: 6}
+    SMS: {fr: 0, modules: 1, programs: 1, note: "FR 編號在 AGT 下（FR-AGT-007），模組獨立拆分"}
+    QI:  {fr: 7, modules: 7, programs: 7}
+    RPT: {fr: 3, modules: 3, programs: 3}
+    WS:  {fr: 5, modules: 5, programs: 5}
+    ADM: {fr: 5, modules: 5, programs: 5}
