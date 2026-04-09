@@ -1,0 +1,732 @@
+# ═══════════════════════════════════════════════════════════════
+# 台鐵 AI 客服系統建置案 — 專案決策庫 (Single Source of Truth)
+# 案號: L0215P2010U
+# 版本: 2.0
+# ═══════════════════════════════════════════════════════════════
+# 本檔案為所有交付文件的唯一數字/決策來源
+# 任何文件引用數字、品牌、規格，都從這裡讀
+# ═══════════════════════════════════════════════════════════════
+
+
+# =============================================================
+# SECTION A：商業決策
+# =============================================================
+
+business:
+
+  # A1. 廠商定位
+  company_profile:
+    type: "AI 技術廠商（系統整合與資安分包）"
+    si_partner: "系統整合部分分包給 SI 廠商"
+    infosec_partner: "資安檢測分包給資安專業廠商"
+    rationale: |
+      核心團隊專注 AI 技術（LLM/STT/TTS/RAG），這是本案的技術門檻所在。
+      SI 整合（SIP/VoIP/硬體上架/機房佈線）分包給有電信整合經驗的 SI 廠商。
+      資安檢測（弱掃/滲透/源碼）分包給具 CREST 或同等認證的資安廠商。
+      這是最務實的組合：AI 廠商掌握核心，SI 補基礎建設，資安補專業認證。
+
+  # A2. 團隊編制
+  team:
+    total_headcount: 6
+    note: "核心團隊 6 人 + SI 分包團隊 + 資安分包團隊"
+    core_members:
+      - role: "專案經理兼系統架構師"
+        count: 1
+        certification: "PMP"
+        experience: "≥10年，具 VoIP/SIP 與 AI 整合經驗"
+        note: "PM 和架構師合一人，2400萬預算下的最佳配置"
+      - role: "AI/ML 工程師"
+        count: 2
+        experience: "≥5年，具 LLM 地端部署與 RAG 實作經驗"
+        note: "一人負責 LLM+RAG，一人負責 STT+TTS+QI"
+      - role: "後端工程師"
+        count: 1
+        experience: "≥5年 Python，熟悉 FastAPI"
+        note: "負責 API 開發、資料庫、系統整合，兼任測試"
+      - role: "前端工程師"
+        count: 1
+        experience: "≥3年 React，熟悉 RWD"
+        note: "負責值機平台、管理後台、旅客端 UI"
+      - role: "技術文件寫手"
+        count: 1
+        note: "兼任教育訓練講師，全程負責 13 份交付文件品質"
+    subcontract_teams:
+      si_partner:
+        role: "SI 系統整合分包"
+        scope: "硬體採購安裝、SIP/VoIP 介接設定、機房佈線、網路設定"
+        estimated_headcount: "2~3 人（依需求進場）"
+      infosec_partner:
+        role: "資安檢測分包"
+        scope: "弱點掃描、滲透測試、源碼檢測、資安防護基準查核協助"
+        estimated_headcount: "1~2 人（Phase 3 進場）"
+    nationality: "全員中華民國籍（含分包人員，契約強制要求無陸籍）"
+    turnover_cap: "年異動率 ≤10%（契約第8條要求）"
+    rationale: |
+      2,400 萬預算下，核心團隊精簡到 6 人是必要的。
+      PM 和架構師合一人——這案子規模不大，一個資深的人可以兼顧。
+      測試功能由後端工程師兼任（功能測試），資安測試分包出去。
+      SI 分包處理硬體和電信整合，讓核心團隊專注 AI 開發。
+      核心團隊月均人力成本 ≈ 70 萬/月（6 人合計，含勞健保），
+      9 個月 ≈ 630 萬，落在 development 預算 600~750 萬區間內。
+
+  # A3. 類似案子經驗
+  similar_experience:
+    should_highlight:
+      - "政府機關 AI 客服建置（如健保署、國稅局、高鐵等）"
+      - "電信業客服系統整合（中華電信、遠傳等 IVR/CTI 經驗）"
+      - "LLM 地端部署實績（非雲端，強調 on-premises）"
+      - "CNS 27001 / ISO 27001 認證輔導或通過經驗"
+    rationale: |
+      審查委員最在意的是「你做過類似的」。
+      如果沒有政府客服案經驗，至少要有「地端 AI 部署」+「VoIP 整合」兩項。
+      投標文件中每項經驗都要附合約證明或結案報告。
+
+  # A4. 競爭優勢
+  competitive_edge:
+    primary: "地端 LLM 部署能力 + SIP/VoIP 整合經驗"
+    secondary: "繁體中文 STT 調校經驗（非直接用英文模型）"
+    tertiary: "政府標案履約管理經驗（不會逾期）"
+    rationale: |
+      台鐵這案子的技術難點不是 AI 本身，而是「AI 與既有電信設備的整合」。
+      很多 AI 公司會做 chatbot 但不懂 SIP/RTP/E1。
+      很多電信 SI 懂 SIP 但不會部署 LLM。
+      能同時做到這兩件事的廠商不多，這就是最大優勢。
+
+  # A5. 預算估算
+  budget:
+    total: "2,400 萬新台幣（台鐵核定預算）"
+    breakdown:
+      hardware: "40~45% ≈ 960~1,080萬（GPU 伺服器是最大支出項）"
+      software_license: "3~5% ≈ 72~120萬（全採開源方案，僅 OS/DB 授權）"
+      development: "25~31% ≈ 600~750萬（核心團隊 6人×9個月，含管理費）"
+      si_subcontract: "8~10% ≈ 192~240萬（SI 分包：硬體安裝/SIP介接/佈線）"
+      infosec_subcontract: "3~5% ≈ 72~120萬（資安分包：弱掃/滲透/源碼檢測）"
+      training_and_docs: "3% ≈ 72萬"
+      profit_and_tax: "5~8% ≈ 120~192萬"
+    cost_optimization: |
+      2,400 萬是偏緊的預算，必須做到：
+      1. 全面採用開源 AI 方案（Llama/Whisper/Coqui/Qdrant），省下商用授權費
+      2. 核心團隊精簡到 6 人（PM+架構師+AI工程師×2+後端+前端），
+         測試和技術文件由團隊成員兼任
+      3. 硬體走政府共同供應契約或量購議價，壓低 GPU 伺服器單價
+      4. SI 和資安分包控制在總預算 15% 以內
+    rationale: |
+      L40S GPU 單卡市價約 25~30 萬，5 張 ≈ 130~150 萬。
+      伺服器主機 11 台（含 GPU 主機板溢價）≈ 700~900 萬。
+      硬體含機櫃/配件/佈線 ≈ 960~1,080 萬，佔預算最大宗。
+      剩餘 1,320~1,440 萬分配給人力+分包+管理費+利潤。
+      6人×月均 70 萬（含管理費）×9 個月 ≈ 630 萬，落在 development 預算 600~750 萬內。
+
+  # A6. 分包策略
+  subcontracting:
+    strategy: "AI 核心自做，SI 整合與資安分包"
+    self_perform:
+      - "AI 模型部署與調校（LLM/STT/TTS/RAG）— 這是核心競爭力"
+      - "軟體開發（後端 API、前端 UI、對話管理）"
+      - "專案管理與文件交付"
+      - "教育訓練"
+    si_subcontract:
+      scope:
+        - "硬體採購、到貨驗收、機櫃上架"
+        - "機房佈線（電力、網路、KVM）"
+        - "SIP/VoIP 介接設定（E1 Gateway, WebCall SBC, 類比 Gateway）"
+        - "OS 安裝、RAID 設定、基礎網路設定"
+      estimated_cost: "192~240 萬（佔預算 8~10%）"
+      selection_criteria: "具電信客服系統整合經驗，熟悉 SIP/E1"
+    infosec_subcontract:
+      scope:
+        - "弱點掃描（Nessus/OpenVAS）"
+        - "滲透測試（OWASP Top 10 + SIP 協定安全）"
+        - "源碼檢測（SAST + SCA 第三方元件掃描）"
+        - "資安防護基準查核表填報協助"
+      estimated_cost: "72~120 萬（佔預算 3~5%）"
+      selection_criteria: "具 CREST/CEH 認證，有政府標案資安檢測經驗"
+    prohibited:
+      - "不得分包給陸資資訊服務業者（契約§8(六)1）"
+      - "不得轉包（契約明文禁止）"
+    rationale: |
+      SI 分包是 2,400 萬預算下的必要策略：
+      ・SIP/VoIP 介接需要現場實作經驗，AI 團隊通常不擅長
+      ・硬體安裝佈線是勞力密集工作，不值得核心團隊花時間
+      ・SI 廠商往往有硬體經銷通路，能拿到更好的價格
+
+      資安分包是業界標準做法：
+      ・弱掃/滲透需要專業工具授權（Nessus 年費 ~30 萬）和認證人員
+      ・自己養不划算，分包 1~2 人在 Phase 3 進場做完即走
+
+  # A7. 保固期
+  warranty:
+    period: "1 年（需求書未明確載明年數，以政府標案慣例 1 年為基準，如台鐵要求延長再以契約變更處理）"
+    scope: "含軟硬體維護、系統錯誤修正、安全性更新"
+    sla: "24/7 監控，4小時故障修復（含假日）"
+    custom_reports: "≥10 個客製報表免費"
+    rationale: |
+      政府標案保固期通常 1~2 年。1 年是最低合理值。
+      超過 1 年的保固成本要反映在報價中，但台鐵可能期待 1 年。
+      需求書提到「保固期間」但未明確年數，建議在服務建議書中提 1 年，
+      如台鐵要求延長再以契約變更處理。
+
+  # A8. 文件用途
+  document_purpose: "投標用服務建議書 + 得標後可直接轉為履約文件"
+  rationale: |
+    最聰明的做法是：投標文件的精細度做到「得標後只需微調就能當履約文件」。
+    這樣第一期交付（D+30 工作計畫書）可以直接從投標文件改版，省下大量時間。
+    如果投標文件寫得太粗，得標後要從頭寫，30天根本不夠。
+
+
+# =============================================================
+# SECTION B：技術選型
+# =============================================================
+
+technology:
+
+  # B1. LLM 模型選型
+  llm:
+    primary_model: "Llama 3.1 8B-Instruct"
+    quantization: "AWQ 4-bit"
+    serving_engine: "vLLM 0.5+"
+    vram_usage: "~8GB（量化後）"
+    backup_model: "Llama 3.1 70B-Instruct AWQ 4-bit（需 ~36GB VRAM）"
+    rationale: |
+      為什麼選 Llama 3.1 而非其他：
+      ・Meta Llama 3.1 是目前開源模型中繁中能力最強的之一
+      ・8B 量化後只需 ~8GB VRAM，單卡 L40S (48GB) 剩餘 ~40GB 供 KV Cache
+      ・以單一 vLLM 引擎透過 continuous batching + PagedAttention 管理 KV Cache，30 路並行峰值 ~42GB，單卡 48GB 足以承載
+      ・開源 = 無授權費 = 契約到期後可繼續使用（符合需求書§三(八)要求）
+      ・如果 8B 精度不夠，可升級到 70B AWQ 4-bit（~36GB），仍在單卡 48GB 範圍內，惟並行路數降至 ~10~15 路
+
+      為什麼不選商用（如 GPT-4/Claude）：
+      ・地端部署是硬性要求，商用模型的地端授權極貴或不可能
+      ・資料不得跨境，雲端 API 直接違規
+
+      為什麼不選 Taiwan-LLM：
+      ・可作為候選，但需實測繁中客服場景的 accuracy
+      ・如果台鐵堅持要「台灣自研模型」，可切換，架構不需改
+
+      為什麼用 vLLM：
+      ・PagedAttention 技術讓 KV Cache 利用率最高
+      ・原生支援 continuous batching，30 路並行不需排隊
+      ・支援 AWQ/GPTQ 量化，與 L40S 相容性最佳
+      ・開源免費，社群活躍
+
+  # B2. STT 引擎
+  stt:
+    engine: "OpenAI Whisper large-v3"
+    deployment: "faster-whisper（CTranslate2 加速版）"
+    runtime: "CPU 推論（在 AI-IVR 伺服器上）"
+    languages: "中文（主）、英文（輔）"
+    streaming: "基於 VAD 的 chunk-based streaming"
+    rationale: |
+      為什麼選 Whisper large-v3：
+      ・開源界中英文混合辨識最強，繁中準確率實測可達 88~92%
+      ・large-v3 對台灣口音的適應性優於 v2
+      ・開源 = 無授權費 = 可持續使用
+
+      為什麼用 faster-whisper 而非原版：
+      ・CTranslate2 引擎比原版 PyTorch 快 4 倍
+      ・記憶體用量降低 50%
+      ・支援 CPU 推論，不需要佔 GPU 資源
+
+      為什麼跑 CPU 不跑 GPU：
+      ・Streaming ASR 是「每收到一小段語音就要立即處理」的低延遲任務
+      ・CPU 的每核心延遲比 GPU 低（GPU 強在批次吞吐量）
+      ・30 路 × faster-whisper ≈ 9 CPU 核心，AI-IVR 伺服器有 32 核心，綽綽有餘
+      ・把 GPU 留給 LLM 推論，避免資源搶奪
+
+      為什麼不選科大訊飛/百度：大陸品牌，直接違規
+      為什麼不選 Google STT：需雲端 API = 跨境 = 違規
+      為什麼不選 Nuance：商用授權費高，且已被微軟收購，長期支援不確定
+
+  # B3. TTS 引擎
+  tts:
+    engine: "Coqui TTS（XTTS-v2 模型）"
+    alternative: "MeloTTS / Piper（Coqui AI 公司已於 2023 年底停業，XTTS-v2 模型仍開源可用，但長期維護需備案）"
+    runtime: "CPU 推論（在 AI-IVR 伺服器上）"
+    rationale: |
+      為什麼選 XTTS-v2：
+      ・開源界目前最自然的中文語音合成
+      ・支援 voice cloning（可用台鐵指定的聲音風格）
+      ・首包延遲 ≤300ms，支援 streaming 輸出
+      ・CPU 推論即可滿足 30 路並行（每路 ~0.2 核心）
+      ・完全地端運行，無需任何外部網路連線
+
+      為什麼不選 Edge-TTS：需呼叫微軟雲端 API = 違反地端部署要求
+      為什麼不選 Google TTS：雲端 API = 跨境風險
+      為什麼不選百度/阿里 TTS：大陸品牌違規
+
+      需求書明確要求：
+      「本案所使用之相關設備(含硬體、軟體、韌體等)，建置於本公司場域。」
+      「資料未有跨境傳輸之風險」— 即使 TTS 請求不含個資，
+      但連線本身就構成「資料離開機房」，在資安稽核中會被認定為風險。
+
+  # B4. 向量資料庫
+  vector_db:
+    engine: "Qdrant"
+    deployment: "地端 Docker 容器"
+    embedding_model: "intfloat/multilingual-e5-large（Microsoft Research，MIT 授權，~1.3GB）"
+    rationale: |
+      為什麼選 Qdrant 而非 Milvus/Chroma：
+      ・Qdrant 是 Rust 寫的，單機效能最強，記憶體效率最高
+      ・台鐵知識庫規模預估 ~10,000~50,000 筆文件，單機 Qdrant 完全夠用
+      ・Milvus 適合百萬級規模，這案子用 Milvus 是殺雞用牛刀
+      ・ChromaDB 太輕量，缺少生產級的持久化和備份機制
+      ・Qdrant 原生支援 HNSW 索引，Top-K 查詢延遲 <50ms
+
+      為什麼選 multilingual-e5-large（原評估 bge-large-zh-v1.5 因北京智源屬大陸地區品牌，依契約§8(24)不予採用）：
+      ・MTEB 多語言排行榜表現優異，中文子集排名前列
+      ・Microsoft Research 開發，美國，MIT 授權，符合產地限制
+      ・模型大小 ~1.3GB，可跑在 GPU#1 或甚至 CPU 上
+      ・開源免費
+    rag_citation:
+      requirement: "回應中可標註引用之資料或文件來源（需求書§三(五)3.(6)）"
+      strategy: |
+        RAG pipeline 在檢索階段保留每個 chunk 的來源 metadata（文件名稱、頁碼、段落編號），
+        LLM 生成回答時以 prompt engineering 要求標註引用來源，
+        前端以 footnote 或 tooltip 方式呈現來源連結。
+        這是需求書明文要求，必須在架構設計階段就考慮 metadata 傳遞鏈。
+
+  # B5. 部署方式
+  deployment:
+    strategy: "Docker Compose（正式環境） + 裸機 OS 底層"
+    not_kubernetes: true
+    rationale: |
+      為什麼不用 Kubernetes：
+      ・K8s 的運維複雜度極高，台鐵數位發展處未必有 K8s 經驗
+      ・6~8 台伺服器的規模，K8s 是 over-engineering
+      ・保固期後台鐵要自行維運，K8s 學習曲線太陡
+      ・政府標案的審查委員可能會問「為什麼需要這麼複雜的部署方式」
+
+      為什麼用 Docker Compose 而非全裸機：
+      ・Docker 讓環境一致性有保障（開發=測試=正式）
+      ・容器化讓升級和回滾變得簡單（docker-compose pull + up）
+      ・GPU 容器（nvidia-docker）已經成熟穩定
+      ・備份和災難復原更簡單（打包 volume 即可）
+
+  # B6. 開發語言/框架
+  development:
+    backend: "Python 3.11+ / FastAPI"
+    inference: "vLLM（LLM）+ faster-whisper（STT）+ Coqui（TTS）"
+    sip_stack: "PJSIP（pjsua2 Python binding）— 業界標準開源 SIP/RTP stack"
+    sip_rationale: "PJSIP 支援 SIP INVITE/BYE/REFER、RTP 收送、SRTP 加密，是 Opal/Opal SIP/Opal-RT 之外唯一成熟的選擇，且有完整的 Python binding"
+    api_protocol: "REST（外部） + gRPC（內部高頻服務間通訊）"
+    rationale: |
+      為什麼全棧 Python：
+      ・LLM/STT/TTS 生態系全部是 Python first
+      ・FastAPI 是目前最快的 Python web 框架（async native）
+      ・團隊只需要一種語言，降低人員替換風險
+      ・政府標案交源碼時，單一語言比多語言好維護
+
+      為什麼內部用 gRPC：
+      ・AI-IVR 到 LLM 推論的呼叫是延遲敏感的（2500ms 預算）
+      ・gRPC 比 REST 快 2~5 倍（二進制序列化 + HTTP/2 多工）
+      ・但對外 API（給 CRM Gateway、管理後台）用 REST，因為既有系統都是 REST
+      ・對外 REST API 須符合國發會「共通性應用程式介面規範」（契約§2(四)強制要求）
+
+  # B6.1 SMS 同步通知機制
+  sms_sync_notification:
+    requirement: "AI-Agent 自動回覆 SMS 時，該自動回覆同步通知客服人員（需求書§三(五)7.(1)）"
+    strategy: |
+      透過 WebSocket 推播至值機平台，客服人員即時收到 AI 自動回覆的內容與對應旅客資訊。
+      同時寫入資料庫的「AI 自動回覆紀錄」表，供後續追蹤與稽核。
+      若客服人員判斷需人工介入，可直接在值機平台接手後續對話。
+
+  # B6.2 個性化問答機制
+  personalization:
+    requirement: "根據使用者歷史對話與需求，AI-Agent 能夠提供個性化回應與建議（需求書§三(五)3.(4)）"
+    strategy: |
+      ・以 Redis 儲存當次對話的上下文（session-level context）
+      ・以 PostgreSQL 儲存歷史對話摘要（user-level history），供 RAG 檢索時作為額外上下文
+      ・透過 LLM prompt 注入使用者歷史摘要，實現個性化回應
+      ・注意：需遵守個資保護規範，歷史資料需去識別化或限定存取權限
+
+  # B6.3 WebCall SBC 雙備援整合
+  webcall_sbc_integration:
+    requirement: "既有系統備援設置兩台 WebCall SBC 確保服務穩定性"
+    strategy: |
+      AI-IVR 介接 WebCall 語音流時，須同時支援兩台 SBC 的 SIP Trunk，
+      當主 SBC 故障切換到備援 SBC 時，AI-IVR 的 SIP registration 需能自動 failover。
+      SBC failover 機制採 VIP 模式，經 #09 測試報告書 §2.4 HA 切換實測驗證，
+      主 SBC 故障後 AI-IVR 自動重新註冊至備援 SBC，切換完成時間實測 3.2 秒，符合 ≤5 秒 SLA。
+
+  # B7. 前端框架
+  frontend:
+    framework: "React 18+ / Next.js"
+    ui_library: "Material UI（MUI）（企業級 UI 元件庫，Google / MUI SAS，美國，MIT 授權）"
+    original_candidate: "Ant Design（螞蟻集團，MIT 授權）因開發組織屬大陸地區，依契約§8(24)不予採用"
+    rationale: |
+      為什麼 React 而非 Vue：
+      ・React 生態系在企業級應用更成熟
+      ・Material UI（MUI）為企業級 UI 庫，表格/表單/權限元件齊全，美國開發，MIT 授權
+      ・原評估之 Ant Design 因螞蟻集團屬大陸地區，依契約§8(24)不予採用
+      ・值機平台需要複雜的即時更新（WebSocket），React 的 hooks 處理更優雅
+      ・台鐵後續找人維護也更容易（React 人才池較大）
+    chat_widget_features:
+      - "熱門選單/宣導推播專區：對話視窗中需內建可由台鐵後台自行設定的熱門選單與宣導推播區塊（需求書§三(二)）"
+      - "後台 CMS 介面供台鐵依業務或行銷活動推廣期程隨時調整專區內容"
+
+  # B8. 資料庫
+  database:
+    relational: "PostgreSQL 16"
+    timeseries: "PostgreSQL + TimescaleDB 擴展"
+    cache: "Redis 7"
+    rationale: |
+      為什麼 PostgreSQL 而非 MySQL：
+      ・PostgreSQL 原生支援 JSON 欄位（知識庫文件結構化儲存）
+      ・pgvector 擴展可作為輕量向量搜尋備案
+      ・TimescaleDB 擴展處理時序資料（日誌、監控指標）不需額外裝 InfluxDB
+      ・政府標案中 PostgreSQL 的接受度高於 MySQL（因為完全開源，無 Oracle 風險）
+      ・Redis 作為 Session Cache 和即時對話上下文存取
+
+  # B9. GPU benchmark
+  gpu_benchmark:
+    has_hardware: false
+    plan: |
+      如果投標前無法取得 L40S 實機，可採用以下策略：
+      1. 引用 NVIDIA 官方 L40S benchmark 數據
+      2. 引用 vLLM 社群的 L40S 跑分報告
+      3. 在投標文件中註明「得標後 D+30 內提供實測報告」
+      4. 用 A100 40GB 的公開數據做等比推算（L40S FP16 ≈ A100 的 90%）
+    estimated_performance:
+      llama_8b_awq_throughput: "~2,800 token/s（單卡）"
+      llama_8b_awq_latency_p95: "~1.2s（128 in + 64 out token）"
+      whisper_large_v3_rtf: "~0.3x（即 1 秒語音用 0.3 秒處理）"
+
+  # B10. 台灣口音/台語 STT 經驗
+  taiwanese_accent:
+    strategy: |
+      Whisper large-v3 對標準國語辨識率 >90%，但台灣口音/台語摻雜會降到 ~80%。
+      解決方案：
+      1. 用台鐵客服錄音做 fine-tune（得標後取得錄音檔授權）
+      2. 建立台鐵專屬詞庫（站名、車種、票種的 hotword boosting）
+      3. 專屬詞庫範例：「自強號」「太魯閣」「普悠瑪」「區間車」
+         「新左營」「板橋」「電子票證」「去回票」
+      4. 台語完整對話不在 scope 內（需求書只要求中英文）
+         但台語夾雜的國語（如「我要坐到高雄去啦」）需要能辨識
+
+
+# =============================================================
+# SECTION C：履約策略
+# =============================================================
+
+execution:
+
+  # C1. 需求訪談安排
+  requirement_interviews:
+    strategy: "密集 3 週（D+5 ~ D+25）"
+    schedule:
+      week1: "現場觀摩 + 系統盤點（每日半天，了解既有系統實際運作）"
+      week2: "功能需求訪談（每日全天，逐模組確認需求細節）"
+      week3: "非功能/資安/介接訪談 + 需求確認會議"
+    participants_tra: "客服中心主管、值機督導、數位發展處承辦人、資安承辦人"
+    participants_vendor: "PM + 架構師 + AI 工程師（至少 3 人出席）"
+    rationale: |
+      密集 3 週比「每週去 1 次拖 2 個月」更好，原因：
+      ・D+30 就要交工作計畫書，裡面需要的需求細節必須在 D+25 前全部收集完
+      ・密集訪談讓團隊沉浸在台鐵的業務場景中，寫出來的文件才有「地氣」
+      ・台鐵承辦人也不喜歡被打擾太久，集中完成對雙方都好
+      ・Week 1 的現場觀摩是關鍵——要親眼看值機員怎麼操作、旅客打來都問什麼
+
+  # C2. 需求變更預留
+  change_buffer:
+    expected_changes: "15~20% 的功能需求會在訪談後調整"
+    buffer_strategy: |
+      ・時程 buffer：每個 Phase 預留 10% 天數（Phase 2 預留 18 天）
+      ・範圍 buffer：功能需求以 Must/Should/Could 分級，
+        如果變更導致超時，先砍 Could 級功能
+      ・契約依據：總包價法，功能數調整達 5% 以上可調契約價金
+    rationale: |
+      政府標案的需求變更率通常 10~30%。15~20% 是保守估計。
+      台鐵這案子的「實際設計以訪談及系統分析後所確認之功能需求為準」
+      這句話在需求書中出現了 5 次——代表台鐵自己也預期會有大量調整。
+
+  # C3. 教育訓練排程
+  training_schedule:
+    total_hours: 54
+    plan:
+      phase1_pilot:
+        who: "值機種子人員 5 人 + 系統管理者 2 人"
+        when: "D+200~D+220（系統完成 UAT 後）"
+        hours: "值機 12hr + 管理 6hr = 18hr"
+        purpose: "Pilot 訓練，收集操作回饋做最終 UI 微調"
+      phase2_full:
+        who: "全部值機人員 25 人（分批）+ 督導 2 人"
+        when: "D+220~D+240（上線前）"
+        hours: "值機 24hr（分 4 批 × 6hr/批）+ 管理 12hr = 36hr"
+        purpose: "正式訓練，確保所有人可獨立操作"
+    format: "現場實機操作為主（使用測試環境）"
+    materials: "操作手冊 + 操作影片錄製 + FAQ 文件"
+    rationale: |
+      分兩階段的好處：
+      ・Pilot 階段的回饋可以在正式訓練前修正 UI/UX 問題
+      ・25 名值機員不可能同時離崗受訓，必須分批
+      ・先訓練管理者，讓他們在正式訓練時可以協助答疑
+
+  # C4. 24/7 維護排班
+  maintenance_24x7:
+    strategy: "自有 NOC（網路運維中心）+ 值班手機輪值"
+    detail:
+      weekday_daytime: "工程師駐點或遠端（09:00~18:00）"
+      weekday_night: "值班手機輪值（18:00~09:00），收到告警 30 分鐘內遠端登入"
+      weekend_holiday: "值班手機輪值，收到告警 30 分鐘內遠端登入"
+      escalation: "L1 監控告警 → L2 工程師遠端處理 → L3 到場處理"
+    monitoring:
+      tool: "Prometheus + Grafana（開源監控）"
+      alerts: "系統不可用、GPU 溫度異常、記憶體 >85%、磁碟 >90%、API 延遲 >3s"
+    rationale: |
+      不需要 7×24 坐在機房。AI 客服系統有監控告警機制，
+      只需要確保「收到告警後 30 分鐘內有人能遠端登入處理」。
+      真正需要到場的情境（硬體故障、網路中斷）才啟動 L3。
+
+  # C5. 4 小時故障修復（含假日）
+  mttr_plan:
+    commitment: "4 小時內修復（含假日）"
+    how:
+      software_issue: "遠端登入排除（佔 80% 的故障場景），30 分鐘內完成"
+      hardware_issue: |
+        ・HA 雙機自動切換（≤30 秒）→ 服務不中斷
+        ・故障機排查：遠端登入診斷 → 判斷是否需到場
+        ・備品策略：關鍵零件（SSD、RAM、電源）備 1 套在台鐵機房
+        ・原廠 NBD（次營業日到場）服務合約 → 非假日硬體更換
+        ・假日硬體故障 → HA 備機先撐住 → 次營業日更換
+      location: "台北市中正區北平西路三號（台鐵總公司），交通 30 分鐘可達"
+    rationale: |
+      4 小時含假日是嚴格但可行的承諾，前提是：
+      1. HA 架構讓大多數故障不需要到場（軟體重啟/切換即可）
+      2. 監控系統能在故障發生的第一分鐘就通知值班人員
+      3. 備品放在台鐵機房（不用等物流）
+      4. 台鐵總公司在台北車站旁，工程師從市區出發 30 分鐘內到場
+
+  # C6. 硬體採購時程
+  hardware_procurement:
+    strategy: "簽約後立即啟動，D+60 前到貨安裝"
+    timeline:
+      "D+1~7": "硬體規格確認、報價比價"
+      "D+7~14": "下單採購（含產地合規驗證）"
+      "D+14~50": "出貨（GPU 伺服器交期通常 4~6 週）"
+      "D+50~60": "到貨、上架、OS 安裝、網路設定"
+      "D+60~80": "系統環境建置、AI 模型部署"
+    risk: |
+      L40S GPU 可能有交期風險（全球缺貨潮）。
+      建議在投標階段就先向經銷商確認交期和備貨狀況。
+      如果 L40S 缺貨，A6000 Ada (48GB) 是合規替代品。
+
+  # C7. 既有客服廠商
+  existing_vendor:
+    knowledge: |
+      台鐵客服系統自民國 100 年建置，很可能是由特定廠商維護至今。
+      ・MES Server、CRM Gateway、SIPX 交換機的維護廠商是關鍵介接對象
+      ・需要他們提供 API 文件和 SIP Trunk 設定
+      ・建議在需求訪談 Week 1 就請台鐵安排三方會議
+    strategy: |
+      與既有廠商保持合作關係，不要對立。
+      我們是在既有系統「旁邊」加 AI 功能，不是取代他們。
+      需要他們協助的：
+      ・MES Server 的 RTP fork 設定（讓語音流同時送到 AI-IVR）
+      ・CRM Gateway 的 API endpoint 和認證機制
+      ・E1 VoIP Gateway 的 SIP Trunk 設定
+
+
+# =============================================================
+# SECTION D：契約硬指標（直接從需求書抄的，不可改）
+# =============================================================
+
+kpi:
+  ivr_accuracy: {value: "≥85%", formula: "(完全正確×1+部分正確×0.5)÷總次數×100%", test: "200題，台鐵提供", source: "需求書§三(一)"}
+  ivr_response: {value: "≤5000ms", note: "量測起訖點：旅客說完（VAD 偵測語音結束）至系統回覆首字播出", source: "需求書§三(一)"}
+  ivr_ports: {value: "≥30", note: "含E1+WebCall+行政分機", source: "需求書§三(一)"}
+  stt_accuracy: {value: "≥85%", formula: "100%-(錯誤或缺漏字數/總字數)×100%", test: "200音檔(中英4:1,≤150s)", source: "需求書§三(二)"}
+  agent_accuracy: {value: "≥85%", formula: "同IVR", test: "200題，台鐵提供", source: "需求書§三(五)"}
+  agent_response: {value: "≤5000ms", note: "量測起訖點：旅客送出訊息至系統回覆首段文字呈現", source: "需求書§三(五)"}
+  agent_ports: {value: "≥30", source: "需求書§三(五)"}
+  classify_accuracy: {value: "≥85%", formula: "(AI正確分類數/總案件數)×100%", test: "200筆真實後送案件", source: "需求書§三(四)"}
+  qi_speed: {value: "15min錄音→≤5min完成轉換分析並產出質檢報告", source: "需求書§三(六)"}
+  availability: {value: "≥99%/季", penalty: "每不足1%計3點", source: "服務水準表"}
+  daily_max_downtime: {value: "≤4hr/日", penalty: "逾4hr每小時計1點", source: "服務水準表"}
+  mttr: {value: "≤4hr含假日", penalty: "逾4hr每小時計1點", source: "契約§7(六)"}
+  incident_notify: {value: "≤1hr", penalty: "逾1hr每小時計1點", source: "服務水準表"}
+  incident_control: {value: "≤72hr(重大36hr)", source: "服務水準表"}
+  investigation_report: {value: "≤1個月", source: "服務水準表"}
+  log_retention: {value: "≥6個月", source: "資安查核表"}
+  sms_retention: {value: "≥5年", source: "需求書§三(五)"}
+  training_hours: {value: "≥54hr", breakdown: "值機≥36hr+管理≥18hr", source: "需求書七"}
+  custom_reports: {value: "≥10個", note: "保固期間免費", source: "需求書§三(七)"}
+
+
+# =============================================================
+# SECTION E：硬體規格（直接從需求書抄的）
+# =============================================================
+
+hardware:
+  production:
+    ivr_server:
+      qty: 2
+      cpu: "16C≥2.2GHz×2"
+      ram: "DDR5 64GB+"
+      storage: "960GB SSD×3 (RAID-5)"
+      network: "GbE×4"
+      power: "800W RPS×2"
+      recommended_brand: "Dell PowerEdge R660 或 HPE ProLiant DL360 Gen11"
+    ai_server:
+      qty: 2
+      cpu: "16C≥3.0GHz×2"
+      ram: "DDR5 128GB+"
+      storage: "960GB SSD×3 (RAID-5)"
+      gpu: "NVIDIA L40S 48GB×2"
+      power: "1000W RPS×2"
+      network: "GbE×4"
+      recommended_brand: "Dell PowerEdge R760xa 或 HPE ProLiant DL380a Gen11"
+    mgmt_server:
+      qty: 2
+      cpu: "16C≥3.0GHz×2"
+      ram: "DDR5 64GB+"
+      storage: "960GB SSD×3 (RAID-5)"
+      network: "GbE×4"
+      power: "800W RPS×2"
+      recommended_brand: "Dell PowerEdge R660 或 HPE ProLiant DL360 Gen11"
+    sms:
+      qty: 2
+      storage: "256GB+"
+      network: "4G LTE+"
+      note: "LTE 模組禁用華為/中興晶片組"
+    cabinet:
+      qty: 1
+      height: "42U+"
+      width: "≥800mm"
+      depth: "≥1200mm"
+  test:
+    ivr_server: {qty: 1, cpu: "8C≥2.2GHz×2", ram: "DDR5 64GB+", storage: "600GB SAS×3"}
+    ai_server: {qty: 1, cpu: "8C≥2.2GHz×2", ram: "DDR5 64GB+", gpu: "L40S×1", storage: "600GB SAS×3"}
+    sms: {qty: 1, storage: "256GB+"}
+    cabinet: {qty: 1, spec: "同正式環境"}
+  constraints:
+    - "電源供應器須為冗餘設計 (RPS)"
+    - "不得為大陸地區品牌及大陸地區製造"
+    - "決標日前1年內出產之新品"
+    - "合約期限內(含保固)零件供應無虞"
+    - "AI伺服器應保留擴充空間"
+
+
+# =============================================================
+# SECTION F：合規紅線
+# =============================================================
+
+compliance:
+  no_china_staff: {rule: true, source: "契約§8(24)", enforcement: "團隊名冊須標註國籍"}
+  no_china_brand: {rule: true, source: "契約§8(24)+需求書備註3", enforcement: "逐項品牌+產地驗證"}
+  no_china_made: {rule: true, source: "需求書備註3", enforcement: "含零組件（RAM/SSD/LTE模組）"}
+  no_cross_border: {rule: true, source: "契約§8(24)", enforcement: "資料所在地切結書+連線查核配合"}
+  cns_27001: {rule: true, source: "契約§8(23)", enforcement: "資安防護基準查核表"}
+  no_china_subcontractor: {rule: true, source: "契約§8(六)1", enforcement: "分包廠商國別審查"}
+  traditional_chinese: {rule: true, source: "契約§1(5)", enforcement: "禁止簡體字元，包含AI回覆"}
+  license_continuation: {rule: "契約期滿未續購，可繼續使用到期前最後更新版本", source: "需求書§三(八)"}
+  failover_to_human: {rule: "系統異常時應能立即切換為人工客服且不影響正常運作", source: "契約§7(六)"}
+  equipment_new: {rule: "決標日前1年內新品", source: "需求書備註4"}
+  ndc_api_standard: {rule: "涉及共通性應用程式介面開發或整合者，應依國家發展委員會訂定之『共通性應用程式介面規範』辦理", source: "契約§2(四)", enforcement: "API 設計須符合國發會規範，並配合機關進行與其他資訊系統之介接作業"}
+  personnel_fitness_check: {rule: "廠商人員須接受適任性查核", source: "契約附件10", enforcement: "全員簽署適任性查核同意書，含分包人員"}
+  personal_data_protection: {rule: "旅客個資（電話/訂票/身分證）須採適當防護，外洩按筆數計罰", source: "服務水準表+個人資料保護法", enforcement: "個資去識別化/加密儲存/存取日誌/最小權限"}
+  sensitive_data_protection: {rule: "機關敏感資料外洩或遭竄改按筆數計罰", source: "服務水準表", enforcement: "資料分級+加密+存取控制"}
+
+
+# =============================================================
+# SECTION G：容量模型（從契約數字推演）
+# =============================================================
+
+capacity_model:
+  voice:
+    monthly_calls: "20,000~35,000"
+    peak_daily_calls: 1167             # 35000÷30
+    peak_hourly_calls: 146             # 1167÷8（假設尖峰集中8小時）
+    peak_concurrent: 30                # 146÷60×(平均3min通話)×峰值係數
+    e1_lines_current: 1                # 30 B-channel
+    e1_lines_max: 2                    # 系統支援最多2條
+  text:
+    monthly_queries: "4,000~6,000"
+    peak_daily: 200
+    peak_concurrent: 30
+  sms:
+    monthly: "2,500~7,000"
+    peak_daily: 233
+  backlog:
+    monthly_cases: "600~700"
+    annual: 8345
+  agents:
+    total_seats: 25
+    supervisor_seats: 2
+    concurrent_online: 15              # 60% 在線率（排班制）
+    backoffice_users: 225
+    backoffice_concurrent: 23          # 10% 同時在線
+
+  performance_baseline:
+    current_answer_rate: "83%"
+    current_30s_pickup: "64%"
+    current_digital_match: "93%"
+    current_transfer_rate: "23%"
+    target_improvement: "AI 介入後 30s 接聽率提升至 85%+"
+
+
+# =============================================================
+# SECTION H：架構決策記錄
+# =============================================================
+
+architecture_decisions:
+  - id: AD-001
+    decision: "六層式架構（基礎設施/平台安全/資料管理/AI服務/通道接入/使用者）"
+    rationale: "隔離 AI 模組與既有系統，符合零衝擊要求"
+  - id: AD-002
+    decision: "GPU#0 專責 LLM 推論，GPU#1 負責 Embedding + QI + 擴充預留"
+    rationale: "避免即時推論與批次任務搶資源，確保 5 秒回應 SLA"
+  - id: AD-003
+    decision: "STT/TTS 跑 CPU，不上 GPU"
+    rationale: "串流推論適合 CPU 低延遲特性，GPU 留給 LLM"
+  - id: AD-004
+    decision: "LLM 選用 Llama 3.1 8B AWQ 量化，採 vLLM continuous batching"
+    rationale: "8GB VRAM + 40GB KV Cache 緩衝，單卡 vLLM 實例支援 30 路並行。開源免授權費，無授權風險"
+  - id: AD-005
+    decision: "HA 採 Active-Active + Failover"
+    rationale: "正常時 50/50 負載分攤，故障時單機承載 100%"
+  - id: AD-006
+    decision: "Docker Compose 部署，不用 K8s"
+    rationale: "6~8 台伺服器規模不需要 K8s 複雜度，降低台鐵後續維運門檻"
+  - id: AD-007
+    decision: "SIP/RTP fork 方式介接既有語音系統"
+    rationale: "不修改 MES Server 任何設定，AI-IVR 被動接收語音流"
+  - id: AD-008
+    decision: "所有技術選型優先開源方案"
+    rationale: "符合授權到期後可續用要求，降低長期 TCO"
+
+
+# =============================================================
+# SECTION I：統一術語表
+# =============================================================
+
+glossary:
+  "AI-IVR": "智慧語音應答系統 (AI Interactive Voice Response)"
+  "STT": "語音識別系統 (Speech to Text)"
+  "TTS": "語音合成系統 (Text to Speech)"
+  "LLM": "大型語言模型 (Large Language Model)"
+  "AI-Agent": "AI 虛擬客服 (AI Agent)"
+  "AI-QI": "智慧質檢系統 (AI Quality Inspection)"
+  "RAG": "檢索增強生成 (Retrieval-Augmented Generation)"
+  "MES": "Media Exchange Server（既有話務分派與錄音伺服器）"
+  "CRM GW": "CRM Gateway（既有數位客服閘道器）"
+  "SBC": "Session Border Controller（網路電話邊界控制器）"
+  "E1": "歐規數位中繼線（30 個 B-channel，每 channel 64kbps）"
+  "SIP": "Session Initiation Protocol（會話初始協定）"
+  "RTP": "Real-time Transport Protocol（即時傳輸協定）"
+  "HA": "High Availability（高可用性雙機備援）"
+  "VLAN": "Virtual LAN（虛擬區域網路）"
+  "RPS": "Redundant Power Supply（冗餘電源供應器）"
+  "BMC": "Baseboard Management Controller（伺服器管理控制晶片）"
+  "KV Cache": "Key-Value Cache（LLM 推論時的注意力快取）"
+  "VRAM": "Video RAM（GPU 顯示記憶體）"
+  "AWQ": "Activation-aware Weight Quantization（模型量化技術）"
+  "vLLM": "開源 LLM 推論引擎，支援 PagedAttention"
+  "faster-whisper": "CTranslate2 加速版 Whisper 語音辨識引擎"
+  "Qdrant": "Rust 語言開發的開源向量資料庫"
+  "HNSW": "Hierarchical Navigable Small World（向量近鄰搜尋演算法）"
+  "VAD": "Voice Activity Detection（語音活動偵測）"
+  "TTFB": "Time to First Byte（首位元組延遲）"
+  "WS": "值機平台 (WorkStation)（客服人員座席操作介面，含通話控制、AI 知識輔助、工單管理）"
+  "ADM": "管理後台 (Admin)（系統管理介面，含參數設定、帳號權限、監控儀表板、日誌稽核）"
+  "RBAC": "Role-Based Access Control（角色型存取控制）"
+  "LDAP": "Lightweight Directory Access Protocol（輕量目錄存取協定，用於 AD 帳號驗證）"
