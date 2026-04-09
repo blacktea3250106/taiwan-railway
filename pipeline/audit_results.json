@@ -1,0 +1,114 @@
+[
+  {
+    "id": "DOCX-001",
+    "sev": "minor",
+    "file": "01_工作計畫書.docx",
+    "dim": "B",
+    "cat": "table-header-repeat",
+    "desc": "18 large tables (>5 rows) lack header row repeat for cross-page"
+  },
+  {
+    "id": "DOCX-002",
+    "sev": "minor",
+    "file": "02_系統分析報告書.docx",
+    "dim": "B",
+    "cat": "table-header-repeat",
+    "desc": "83 large tables (>5 rows) lack header row repeat for cross-page"
+  },
+  {
+    "id": "DOCX-003",
+    "sev": "minor",
+    "file": "03_程式設計規格報告書.docx",
+    "dim": "B",
+    "cat": "table-header-repeat",
+    "desc": "21 large tables (>5 rows) lack header row repeat for cross-page"
+  },
+  {
+    "id": "DOCX-004",
+    "sev": "minor",
+    "file": "04_教育訓練計畫書.docx",
+    "dim": "B",
+    "cat": "table-header-repeat",
+    "desc": "1 large tables (>5 rows) lack header row repeat for cross-page"
+  },
+  {
+    "id": "DOCX-005",
+    "sev": "minor",
+    "file": "05_測試計畫書.docx",
+    "dim": "B",
+    "cat": "table-header-repeat",
+    "desc": "12 large tables (>5 rows) lack header row repeat for cross-page"
+  },
+  {
+    "id": "DOCX-006",
+    "sev": "minor",
+    "file": "06_軟硬體清單及系統架構圖.docx",
+    "dim": "B",
+    "cat": "table-header-repeat",
+    "desc": "9 large tables (>5 rows) lack header row repeat for cross-page"
+  },
+  {
+    "id": "DOCX-007",
+    "sev": "minor",
+    "file": "07_軟體使用及維護手冊.docx",
+    "dim": "B",
+    "cat": "table-header-repeat",
+    "desc": "11 large tables (>5 rows) lack header row repeat for cross-page"
+  },
+  {
+    "id": "DOCX-008",
+    "sev": "minor",
+    "file": "08_系統上線執行計畫書.docx",
+    "dim": "B",
+    "cat": "table-header-repeat",
+    "desc": "14 large tables (>5 rows) lack header row repeat for cross-page"
+  },
+  {
+    "id": "DOCX-009",
+    "sev": "minor",
+    "file": "09_測試報告書.docx",
+    "dim": "A",
+    "cat": "keyword",
+    "desc": "Missing: 弱���掃描"
+  },
+  {
+    "id": "DOCX-010",
+    "sev": "minor",
+    "file": "09_測試報告書.docx",
+    "dim": "B",
+    "cat": "table-header-repeat",
+    "desc": "27 large tables (>5 rows) lack header row repeat for cross-page"
+  },
+  {
+    "id": "DOCX-011",
+    "sev": "minor",
+    "file": "10_程式設計書.docx",
+    "dim": "B",
+    "cat": "table-header-repeat",
+    "desc": "38 large tables (>5 rows) lack header row repeat for cross-page"
+  },
+  {
+    "id": "DOCX-012",
+    "sev": "minor",
+    "file": "11_原始程式碼光碟.docx",
+    "dim": "B",
+    "cat": "table-header-repeat",
+    "desc": "20 large tables (>5 rows) lack header row repeat for cross-page"
+  },
+  {
+    "id": "DOCX-013",
+    "sev": "minor",
+    "file": "12_教育訓練執行報告書.docx",
+    "dim": "B",
+    "cat": "table-header-repeat",
+    "desc": "10 large tables (>5 rows) lack header row repeat for cross-page"
+  },
+  {
+    "id": "DOCX-014",
+    "sev": "minor",
+    "file": "13_結案報告.docx",
+    "dim": "B",
+    "cat": "table-header-repeat",
+    "desc": "16 large tables (>5 rows) lack header row repeat for cross-page"
+  }
+]
